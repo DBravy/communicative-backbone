@@ -1,0 +1,4816 @@
+{
+  "model": "70m",
+  "model_name": "EleutherAI/pythia-70m",
+  "d_model": 512,
+  "n_layers": 6,
+  "k_values": [
+    5,
+    10,
+    20,
+    50
+  ],
+  "random_baselines": {
+    "5": {
+      "mean_cosine_mean": 0.08213303843502544,
+      "mean_cosine_std": 0.012194739905228246
+    },
+    "10": {
+      "mean_cosine_mean": 0.11703846046282193,
+      "mean_cosine_std": 0.00944562529151107
+    },
+    "20": {
+      "mean_cosine_mean": 0.16727575494601277,
+      "mean_cosine_std": 0.006658263534018471
+    },
+    "50": {
+      "mean_cosine_mean": 0.2670424324071782,
+      "mean_cosine_std": 0.0037262905710116557
+    }
+  },
+  "checkpoints": {
+    "0": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.0700763463973999,
+            "max_cosine": 0.13616539537906647,
+            "min_cosine": 0.003190602408722043,
+            "median_cosine": 0.05778753012418747,
+            "grassmann_distance": 3.3572850227355957,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.09542326629161835,
+            "max_cosine": 0.16282868385314941,
+            "min_cosine": 0.03584017604589462,
+            "median_cosine": 0.08103795349597931,
+            "grassmann_distance": 3.3004937171936035,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.10873319208621979,
+            "max_cosine": 0.22139906883239746,
+            "min_cosine": 0.0001947421842487529,
+            "median_cosine": 0.10696624219417572,
+            "grassmann_distance": 4.627460956573486,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12886805832386017,
+            "max_cosine": 0.23569120466709137,
+            "min_cosine": 0.017940055578947067,
+            "median_cosine": 0.128275066614151,
+            "grassmann_distance": 4.563710689544678,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1621677279472351,
+            "max_cosine": 0.34931573271751404,
+            "min_cosine": 0.002974321600049734,
+            "median_cosine": 0.14137575030326843,
+            "grassmann_distance": 6.310004711151123,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16794869303703308,
+            "max_cosine": 0.34346872568130493,
+            "min_cosine": 0.008394777774810791,
+            "median_cosine": 0.17403802275657654,
+            "grassmann_distance": 6.282717227935791,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2637353241443634,
+            "max_cosine": 0.5571675300598145,
+            "min_cosine": 0.003706586780026555,
+            "median_cosine": 0.25717025995254517,
+            "grassmann_distance": 9.267683029174805,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27294811606407166,
+            "max_cosine": 0.6189746260643005,
+            "min_cosine": 0.008996968157589436,
+            "median_cosine": 0.26376086473464966,
+            "grassmann_distance": 9.20097827911377,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.08249801397323608,
+            "max_cosine": 0.17911186814308167,
+            "min_cosine": 0.001317910966463387,
+            "median_cosine": 0.0800604298710823,
+            "grassmann_distance": 3.330233097076416,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08682665973901749,
+            "max_cosine": 0.166624516248703,
+            "min_cosine": 0.025755420327186584,
+            "median_cosine": 0.0912460908293724,
+            "grassmann_distance": 3.319626569747925,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.10977355390787125,
+            "max_cosine": 0.24861019849777222,
+            "min_cosine": 0.004005221650004387,
+            "median_cosine": 0.09812472760677338,
+            "grassmann_distance": 4.6250152587890625,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1273687183856964,
+            "max_cosine": 0.253744900226593,
+            "min_cosine": 0.015210024081170559,
+            "median_cosine": 0.1333441287279129,
+            "grassmann_distance": 4.568350791931152,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1704709678888321,
+            "max_cosine": 0.3715006709098816,
+            "min_cosine": 0.0055494545958936214,
+            "median_cosine": 0.16615357995033264,
+            "grassmann_distance": 6.272150039672852,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17717915773391724,
+            "max_cosine": 0.37957531213760376,
+            "min_cosine": 0.013211053796112537,
+            "median_cosine": 0.16740766167640686,
+            "grassmann_distance": 6.24281120300293,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.26394936442375183,
+            "max_cosine": 0.5744495987892151,
+            "min_cosine": 0.0055267116986215115,
+            "median_cosine": 0.25961539149284363,
+            "grassmann_distance": 9.266644477844238,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2670081853866577,
+            "max_cosine": 0.5843830704689026,
+            "min_cosine": 0.015254916623234749,
+            "median_cosine": 0.2538323998451233,
+            "grassmann_distance": 9.246072769165039,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.09856857359409332,
+            "max_cosine": 0.19067439436912537,
+            "min_cosine": 0.007119772024452686,
+            "median_cosine": 0.08650745451450348,
+            "grassmann_distance": 3.2945542335510254,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.06522928178310394,
+            "max_cosine": 0.14391876757144928,
+            "min_cosine": 0.004220202099531889,
+            "median_cosine": 0.05924078822135925,
+            "grassmann_distance": 3.36787486076355,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.11931397765874863,
+            "max_cosine": 0.24328020215034485,
+            "min_cosine": 0.008011218160390854,
+            "median_cosine": 0.11446898430585861,
+            "grassmann_distance": 4.594186782836914,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.09900287538766861,
+            "max_cosine": 0.2267867922782898,
+            "min_cosine": 0.00013846534420736134,
+            "median_cosine": 0.08144380152225494,
+            "grassmann_distance": 4.658308982849121,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1630745828151703,
+            "max_cosine": 0.34801626205444336,
+            "min_cosine": 0.00235141534358263,
+            "median_cosine": 0.1502709984779358,
+            "grassmann_distance": 6.305095195770264,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16462017595767975,
+            "max_cosine": 0.3490194082260132,
+            "min_cosine": 0.00529647758230567,
+            "median_cosine": 0.17155656218528748,
+            "grassmann_distance": 6.297334671020508,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2676808834075928,
+            "max_cosine": 0.6066268682479858,
+            "min_cosine": 0.0023350613191723824,
+            "median_cosine": 0.25119075179100037,
+            "grassmann_distance": 9.237792015075684,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26482662558555603,
+            "max_cosine": 0.5741683840751648,
+            "min_cosine": 3.785865192185156e-05,
+            "median_cosine": 0.2610298693180084,
+            "grassmann_distance": 9.261004447937012,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.09239725768566132,
+            "max_cosine": 0.18620139360427856,
+            "min_cosine": 0.009664847515523434,
+            "median_cosine": 0.08433806896209717,
+            "grassmann_distance": 3.307886838912964,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07906194776296616,
+            "max_cosine": 0.15518581867218018,
+            "min_cosine": 0.006306386087089777,
+            "median_cosine": 0.07383202016353607,
+            "grassmann_distance": 3.3371987342834473,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.1180298700928688,
+            "max_cosine": 0.23053140938282013,
+            "min_cosine": 0.003133037593215704,
+            "median_cosine": 0.10593855381011963,
+            "grassmann_distance": 4.598028182983398,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10190355777740479,
+            "max_cosine": 0.26164510846138,
+            "min_cosine": 0.004307188093662262,
+            "median_cosine": 0.08306355774402618,
+            "grassmann_distance": 4.650609970092773,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1662907898426056,
+            "max_cosine": 0.36144113540649414,
+            "min_cosine": 0.004290924407541752,
+            "median_cosine": 0.1678823083639145,
+            "grassmann_distance": 6.291198253631592,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16496172547340393,
+            "max_cosine": 0.36814141273498535,
+            "min_cosine": 0.011861640028655529,
+            "median_cosine": 0.16078290343284607,
+            "grassmann_distance": 6.297818660736084,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2682093679904938,
+            "max_cosine": 0.5770930051803589,
+            "min_cosine": 0.002877119928598404,
+            "median_cosine": 0.2629361152648926,
+            "grassmann_distance": 9.234047889709473,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2650698721408844,
+            "max_cosine": 0.5528270602226257,
+            "min_cosine": 0.0018392393831163645,
+            "median_cosine": 0.261138379573822,
+            "grassmann_distance": 9.257935523986816,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.08206663280725479,
+            "max_cosine": 0.17380794882774353,
+            "min_cosine": 0.011333407834172249,
+            "median_cosine": 0.09238569438457489,
+            "grassmann_distance": 3.3310883045196533,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07477184385061264,
+            "max_cosine": 0.16725628077983856,
+            "min_cosine": 0.010695057921111584,
+            "median_cosine": 0.06615091860294342,
+            "grassmann_distance": 3.3469552993774414,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.12657971680164337,
+            "max_cosine": 0.2527755796909332,
+            "min_cosine": 0.010244518518447876,
+            "median_cosine": 0.13071022927761078,
+            "grassmann_distance": 4.571685791015625,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11104945093393326,
+            "max_cosine": 0.2118821144104004,
+            "min_cosine": 0.011777243576943874,
+            "median_cosine": 0.1065206453204155,
+            "grassmann_distance": 4.619326114654541,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.16945360600948334,
+            "max_cosine": 0.3398486375808716,
+            "min_cosine": 0.004431592300534248,
+            "median_cosine": 0.16685092449188232,
+            "grassmann_distance": 6.275251865386963,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.15801893174648285,
+            "max_cosine": 0.3335965573787689,
+            "min_cosine": 0.012280666269361973,
+            "median_cosine": 0.1514415442943573,
+            "grassmann_distance": 6.327702045440674,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.26688310503959656,
+            "max_cosine": 0.5899993777275085,
+            "min_cosine": 0.0008041681139729917,
+            "median_cosine": 0.26293623447418213,
+            "grassmann_distance": 9.24677848815918,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.25990191102027893,
+            "max_cosine": 0.560330331325531,
+            "min_cosine": 0.0038713926915079355,
+            "median_cosine": 0.24675896763801575,
+            "grassmann_distance": 9.296562194824219,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.0831226035952568,
+            "max_cosine": 0.16083066165447235,
+            "min_cosine": 0.0011485230643302202,
+            "median_cosine": 0.10969091951847076,
+            "grassmann_distance": 3.328991413116455,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07301469892263412,
+            "max_cosine": 0.15124736726284027,
+            "min_cosine": 0.014274039305746555,
+            "median_cosine": 0.04970260336995125,
+            "grassmann_distance": 3.3506011962890625,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.13437458872795105,
+            "max_cosine": 0.26245662569999695,
+            "min_cosine": 0.0043800584971904755,
+            "median_cosine": 0.12397314608097076,
+            "grassmann_distance": 4.5472307205200195,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11006621271371841,
+            "max_cosine": 0.22179682552814484,
+            "min_cosine": 0.00902465172111988,
+            "median_cosine": 0.09997548162937164,
+            "grassmann_distance": 4.622186660766602,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.16915881633758545,
+            "max_cosine": 0.34794488549232483,
+            "min_cosine": 0.007876005955040455,
+            "median_cosine": 0.1602582335472107,
+            "grassmann_distance": 6.277900218963623,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1612364649772644,
+            "max_cosine": 0.3605253994464874,
+            "min_cosine": 0.012281644158065319,
+            "median_cosine": 0.1565152257680893,
+            "grassmann_distance": 6.314094066619873,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.27594292163848877,
+            "max_cosine": 0.6006211042404175,
+            "min_cosine": 0.0014636992709711194,
+            "median_cosine": 0.26808834075927734,
+            "grassmann_distance": 9.182530403137207,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26823189854621887,
+            "max_cosine": 0.5771808624267578,
+            "min_cosine": 0.006556284613907337,
+            "median_cosine": 0.25707265734672546,
+            "grassmann_distance": 9.238072395324707,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.05357685685157776,
+            "max_cosine": 0.10606304556131363,
+            "min_cosine": 0.006090918090194464,
+            "median_cosine": 0.053689081221818924,
+            "grassmann_distance": 3.393270492553711,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.0763491839170456,
+            "max_cosine": 0.1555820256471634,
+            "min_cosine": 0.01964382827281952,
+            "median_cosine": 0.06574051082134247,
+            "grassmann_distance": 3.3429651260375977,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.10986846685409546,
+            "max_cosine": 0.233141228556633,
+            "min_cosine": 0.005250558257102966,
+            "median_cosine": 0.11049265414476395,
+            "grassmann_distance": 4.623435974121094,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10799518972635269,
+            "max_cosine": 0.2227553278207779,
+            "min_cosine": 0.007548550609499216,
+            "median_cosine": 0.09923430532217026,
+            "grassmann_distance": 4.629761695861816,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1609908640384674,
+            "max_cosine": 0.34872302412986755,
+            "min_cosine": 0.015370892360806465,
+            "median_cosine": 0.14712578058242798,
+            "grassmann_distance": 6.313698768615723,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1635526567697525,
+            "max_cosine": 0.38971707224845886,
+            "min_cosine": 0.004308500327169895,
+            "median_cosine": 0.14823445677757263,
+            "grassmann_distance": 6.30460262298584,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2646138072013855,
+            "max_cosine": 0.557016134262085,
+            "min_cosine": 0.0022439584136009216,
+            "median_cosine": 0.2628377079963684,
+            "grassmann_distance": 9.261937141418457,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2705135643482208,
+            "max_cosine": 0.575108528137207,
+            "min_cosine": 0.0002182707830797881,
+            "median_cosine": 0.2613649368286133,
+            "grassmann_distance": 9.223397254943848,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.06058744341135025,
+            "max_cosine": 0.1471351683139801,
+            "min_cosine": 0.0042821797542274,
+            "median_cosine": 0.050714731216430664,
+            "grassmann_distance": 3.378384828567505,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.09312064200639725,
+            "max_cosine": 0.2055622637271881,
+            "min_cosine": 0.00927326176315546,
+            "median_cosine": 0.07817111164331436,
+            "grassmann_distance": 3.3078365325927734,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.11523161083459854,
+            "max_cosine": 0.2350292056798935,
+            "min_cosine": 0.02347000129520893,
+            "median_cosine": 0.10204343497753143,
+            "grassmann_distance": 4.606504917144775,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12193939834833145,
+            "max_cosine": 0.2559088468551636,
+            "min_cosine": 0.010372401215136051,
+            "median_cosine": 0.10769423842430115,
+            "grassmann_distance": 4.586684226989746,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.16516627371311188,
+            "max_cosine": 0.4054970145225525,
+            "min_cosine": 0.0012698867358267307,
+            "median_cosine": 0.15901240706443787,
+            "grassmann_distance": 6.296787261962891,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17421671748161316,
+            "max_cosine": 0.40118005871772766,
+            "min_cosine": 0.003450978547334671,
+            "median_cosine": 0.15204688906669617,
+            "grassmann_distance": 6.2590718269348145,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2696012258529663,
+            "max_cosine": 0.5807702541351318,
+            "min_cosine": 0.007064801640808582,
+            "median_cosine": 0.2656670808792114,
+            "grassmann_distance": 9.227675437927246,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27089834213256836,
+            "max_cosine": 0.6130499243736267,
+            "min_cosine": 0.005518926773220301,
+            "median_cosine": 0.2629169225692749,
+            "grassmann_distance": 9.21918773651123,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "128": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.181289941072464,
+            "max_cosine": 0.36743471026420593,
+            "min_cosine": 0.01794392615556717,
+            "median_cosine": 0.18548202514648438,
+            "grassmann_distance": 3.1171042919158936,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08871443569660187,
+            "max_cosine": 0.18959292769432068,
+            "min_cosine": 0.0027922249864786863,
+            "median_cosine": 0.09192060679197311,
+            "grassmann_distance": 3.316411256790161,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.1647641658782959,
+            "max_cosine": 0.40279000997543335,
+            "min_cosine": 0.018586061894893646,
+            "median_cosine": 0.12660861015319824,
+            "grassmann_distance": 4.45874547958374,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11450272798538208,
+            "max_cosine": 0.2363511025905609,
+            "min_cosine": 0.010485092177987099,
+            "median_cosine": 0.12081626057624817,
+            "grassmann_distance": 4.609096527099609,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.18872331082820892,
+            "max_cosine": 0.47593584656715393,
+            "min_cosine": 0.009150895290076733,
+            "median_cosine": 0.16619065403938293,
+            "grassmann_distance": 6.198436260223389,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.166546031832695,
+            "max_cosine": 0.3617004156112671,
+            "min_cosine": 0.005568197462707758,
+            "median_cosine": 0.17508743703365326,
+            "grassmann_distance": 6.290356636047363,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.288437157869339,
+            "max_cosine": 0.6325147747993469,
+            "min_cosine": 0.01219792291522026,
+            "median_cosine": 0.28729552030563354,
+            "grassmann_distance": 9.092948913574219,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2758605182170868,
+            "max_cosine": 0.5940425992012024,
+            "min_cosine": 0.0014632793609052896,
+            "median_cosine": 0.26794594526290894,
+            "grassmann_distance": 9.17994499206543,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.29941079020500183,
+            "max_cosine": 0.5198529958724976,
+            "min_cosine": 0.07987080514431,
+            "median_cosine": 0.2974630296230316,
+            "grassmann_distance": 2.847703695297241,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08416780829429626,
+            "max_cosine": 0.15512613952159882,
+            "min_cosine": 0.019884275272488594,
+            "median_cosine": 0.07944036275148392,
+            "grassmann_distance": 3.3255808353424072,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.23051968216896057,
+            "max_cosine": 0.5524846315383911,
+            "min_cosine": 0.02149769850075245,
+            "median_cosine": 0.220315620303154,
+            "grassmann_distance": 4.2560343742370605,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11846703290939331,
+            "max_cosine": 0.2357856184244156,
+            "min_cosine": 0.005700402893126011,
+            "median_cosine": 0.13619059324264526,
+            "grassmann_distance": 4.596608638763428,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.23506510257720947,
+            "max_cosine": 0.600875198841095,
+            "min_cosine": 0.023420564830303192,
+            "median_cosine": 0.2247731238603592,
+            "grassmann_distance": 5.990417003631592,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17188319563865662,
+            "max_cosine": 0.3583691716194153,
+            "min_cosine": 0.009354107081890106,
+            "median_cosine": 0.16018237173557281,
+            "grassmann_distance": 6.266123294830322,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2883428931236267,
+            "max_cosine": 0.6997541189193726,
+            "min_cosine": 0.003486183937638998,
+            "median_cosine": 0.27324843406677246,
+            "grassmann_distance": 9.099929809570312,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2669088542461395,
+            "max_cosine": 0.5848932862281799,
+            "min_cosine": 0.0017805126262828708,
+            "median_cosine": 0.25385767221450806,
+            "grassmann_distance": 9.246786117553711,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.2578999102115631,
+            "max_cosine": 0.48832616209983826,
+            "min_cosine": 0.032668374478816986,
+            "median_cosine": 0.23403428494930267,
+            "grassmann_distance": 2.9450292587280273,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08588633686304092,
+            "max_cosine": 0.17923574149608612,
+            "min_cosine": 0.008123285137116909,
+            "median_cosine": 0.07282789796590805,
+            "grassmann_distance": 3.3226282596588135,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.24071893095970154,
+            "max_cosine": 0.5207787752151489,
+            "min_cosine": 0.012998131103813648,
+            "median_cosine": 0.20743504166603088,
+            "grassmann_distance": 4.219971179962158,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1165306568145752,
+            "max_cosine": 0.22628240287303925,
+            "min_cosine": 0.004763822536915541,
+            "median_cosine": 0.10303846001625061,
+            "grassmann_distance": 4.6022257804870605,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2339068353176117,
+            "max_cosine": 0.5547636151313782,
+            "min_cosine": 0.014762255363166332,
+            "median_cosine": 0.20509308576583862,
+            "grassmann_distance": 5.999233722686768,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16589359939098358,
+            "max_cosine": 0.3921629786491394,
+            "min_cosine": 0.0012110114330425858,
+            "median_cosine": 0.1620500385761261,
+            "grassmann_distance": 6.293581962585449,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.298943430185318,
+            "max_cosine": 0.6832597851753235,
+            "min_cosine": 0.006223464850336313,
+            "median_cosine": 0.2864982485771179,
+            "grassmann_distance": 9.022629737854004,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2686630189418793,
+            "max_cosine": 0.5797483921051025,
+            "min_cosine": 0.007310095708817244,
+            "median_cosine": 0.2679368853569031,
+            "grassmann_distance": 9.23563289642334,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.3182796239852905,
+            "max_cosine": 0.5427706837654114,
+            "min_cosine": 0.08274832367897034,
+            "median_cosine": 0.3071228861808777,
+            "grassmann_distance": 2.804581642150879,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.061908919364213943,
+            "max_cosine": 0.12293033301830292,
+            "min_cosine": 0.011885923333466053,
+            "median_cosine": 0.047048166394233704,
+            "grassmann_distance": 3.37499737739563,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.2582363784313202,
+            "max_cosine": 0.5819247364997864,
+            "min_cosine": 0.0038305220659822226,
+            "median_cosine": 0.25270217657089233,
+            "grassmann_distance": 4.1693549156188965,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12028618901968002,
+            "max_cosine": 0.23029720783233643,
+            "min_cosine": 0.00944901630282402,
+            "median_cosine": 0.11939430236816406,
+            "grassmann_distance": 4.589798450469971,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.24749954044818878,
+            "max_cosine": 0.6077088117599487,
+            "min_cosine": 0.002940539503470063,
+            "median_cosine": 0.2163110077381134,
+            "grassmann_distance": 5.938042640686035,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17181769013404846,
+            "max_cosine": 0.41327786445617676,
+            "min_cosine": 0.001743764616549015,
+            "median_cosine": 0.17136523127555847,
+            "grassmann_distance": 6.268381595611572,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.29460689425468445,
+            "max_cosine": 0.7017534375190735,
+            "min_cosine": 0.008866324089467525,
+            "median_cosine": 0.28776878118515015,
+            "grassmann_distance": 9.05440902709961,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2662905752658844,
+            "max_cosine": 0.581890881061554,
+            "min_cosine": 0.0024097769055515528,
+            "median_cosine": 0.26079487800598145,
+            "grassmann_distance": 9.249361038208008,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.3665130138397217,
+            "max_cosine": 0.7086853384971619,
+            "min_cosine": 0.09357266873121262,
+            "median_cosine": 0.37952640652656555,
+            "grassmann_distance": 2.700766086578369,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.10876165330410004,
+            "max_cosine": 0.2091200053691864,
+            "min_cosine": 0.013076736591756344,
+            "median_cosine": 0.11960574984550476,
+            "grassmann_distance": 3.272578716278076,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.27623963356018066,
+            "max_cosine": 0.7196176052093506,
+            "min_cosine": 0.0028473986312747,
+            "median_cosine": 0.226071298122406,
+            "grassmann_distance": 4.120328426361084,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.13680988550186157,
+            "max_cosine": 0.25407835841178894,
+            "min_cosine": 0.00967888068407774,
+            "median_cosine": 0.13885968923568726,
+            "grassmann_distance": 4.538858890533447,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2531280517578125,
+            "max_cosine": 0.7458750605583191,
+            "min_cosine": 0.00943729653954506,
+            "median_cosine": 0.21427997946739197,
+            "grassmann_distance": 5.921563148498535,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17275017499923706,
+            "max_cosine": 0.34792813658714294,
+            "min_cosine": 0.004952031187713146,
+            "median_cosine": 0.1606414020061493,
+            "grassmann_distance": 6.260469436645508,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.300466388463974,
+            "max_cosine": 0.7927691340446472,
+            "min_cosine": 0.0038222037255764008,
+            "median_cosine": 0.28416454792022705,
+            "grassmann_distance": 9.016695022583008,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26819947361946106,
+            "max_cosine": 0.5832598805427551,
+            "min_cosine": 0.004539330955594778,
+            "median_cosine": 0.2603873014450073,
+            "grassmann_distance": 9.236820220947266,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.11045797914266586,
+            "max_cosine": 0.23650434613227844,
+            "min_cosine": 0.004663737490773201,
+            "median_cosine": 0.10253135114908218,
+            "grassmann_distance": 3.269573211669922,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.063526451587677,
+            "max_cosine": 0.14652426540851593,
+            "min_cosine": 0.007599152624607086,
+            "median_cosine": 0.06436780840158463,
+            "grassmann_distance": 3.3719937801361084,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.12368834018707275,
+            "max_cosine": 0.3306020498275757,
+            "min_cosine": 0.0017996056703850627,
+            "median_cosine": 0.09227434545755386,
+            "grassmann_distance": 4.585499286651611,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10585949569940567,
+            "max_cosine": 0.23219043016433716,
+            "min_cosine": 0.009405529126524925,
+            "median_cosine": 0.09945658594369888,
+            "grassmann_distance": 4.636263370513916,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.17234717309474945,
+            "max_cosine": 0.37948718667030334,
+            "min_cosine": 0.011147147975862026,
+            "median_cosine": 0.15944576263427734,
+            "grassmann_distance": 6.264986991882324,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16491590440273285,
+            "max_cosine": 0.35899925231933594,
+            "min_cosine": 0.016783462837338448,
+            "median_cosine": 0.168193057179451,
+            "grassmann_distance": 6.297854423522949,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2739686071872711,
+            "max_cosine": 0.5972520112991333,
+            "min_cosine": 0.007803032174706459,
+            "median_cosine": 0.26303648948669434,
+            "grassmann_distance": 9.195904731750488,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26702794432640076,
+            "max_cosine": 0.5803545713424683,
+            "min_cosine": 0.0008636785787530243,
+            "median_cosine": 0.2654096782207489,
+            "grassmann_distance": 9.245964050292969,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.11609859764575958,
+            "max_cosine": 0.21321412920951843,
+            "min_cosine": 0.04421106353402138,
+            "median_cosine": 0.1103583574295044,
+            "grassmann_distance": 3.2547473907470703,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.0767318606376648,
+            "max_cosine": 0.12153630703687668,
+            "min_cosine": 0.016515707597136497,
+            "median_cosine": 0.08326250314712524,
+            "grassmann_distance": 3.341465950012207,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.1392388641834259,
+            "max_cosine": 0.31170013546943665,
+            "min_cosine": 0.027490809559822083,
+            "median_cosine": 0.11095798015594482,
+            "grassmann_distance": 4.532843112945557,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.13629846274852753,
+            "max_cosine": 0.2515817880630493,
+            "min_cosine": 0.04689028859138489,
+            "median_cosine": 0.11609794199466705,
+            "grassmann_distance": 4.539558410644531,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1812615692615509,
+            "max_cosine": 0.38061001896858215,
+            "min_cosine": 0.011683172546327114,
+            "median_cosine": 0.1686399281024933,
+            "grassmann_distance": 6.224885940551758,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16936422884464264,
+            "max_cosine": 0.37543824315071106,
+            "min_cosine": 0.00822010450065136,
+            "median_cosine": 0.15863782167434692,
+            "grassmann_distance": 6.278965473175049,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.26861774921417236,
+            "max_cosine": 0.5827416777610779,
+            "min_cosine": 0.0012571844272315502,
+            "median_cosine": 0.2797744870185852,
+            "grassmann_distance": 9.235067367553711,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2707415521144867,
+            "max_cosine": 0.5660191774368286,
+            "min_cosine": 0.0008105557644739747,
+            "median_cosine": 0.26149091124534607,
+            "grassmann_distance": 9.218053817749023,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.30369916558265686,
+            "max_cosine": 0.5883476138114929,
+            "min_cosine": 0.11833527684211731,
+            "median_cosine": 0.26495054364204407,
+            "grassmann_distance": 2.8386406898498535,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1000552624464035,
+            "max_cosine": 0.1750062257051468,
+            "min_cosine": 0.005494828335940838,
+            "median_cosine": 0.1236017718911171,
+            "grassmann_distance": 3.2911336421966553,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.25173476338386536,
+            "max_cosine": 0.6261067390441895,
+            "min_cosine": 0.030071565881371498,
+            "median_cosine": 0.24656587839126587,
+            "grassmann_distance": 4.189921855926514,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1300121247768402,
+            "max_cosine": 0.2526065409183502,
+            "min_cosine": 0.00588952424004674,
+            "median_cosine": 0.1306985318660736,
+            "grassmann_distance": 4.560627460479736,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.23815178871154785,
+            "max_cosine": 0.66038978099823,
+            "min_cosine": 6.969105743337423e-05,
+            "median_cosine": 0.2184297740459442,
+            "grassmann_distance": 5.983678340911865,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17092223465442657,
+            "max_cosine": 0.39679640531539917,
+            "min_cosine": 0.00042154945549555123,
+            "median_cosine": 0.15276417136192322,
+            "grassmann_distance": 6.271945953369141,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.29899683594703674,
+            "max_cosine": 0.7248043417930603,
+            "min_cosine": 0.01413369458168745,
+            "median_cosine": 0.27810829877853394,
+            "grassmann_distance": 9.022955894470215,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26983004808425903,
+            "max_cosine": 0.566973865032196,
+            "min_cosine": 0.005625822581350803,
+            "median_cosine": 0.262433797121048,
+            "grassmann_distance": 9.225517272949219,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "512": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.14691463112831116,
+            "max_cosine": 0.25467297434806824,
+            "min_cosine": 0.009385889396071434,
+            "median_cosine": 0.17490516602993011,
+            "grassmann_distance": 3.187288999557495,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.057426147162914276,
+            "max_cosine": 0.13880707323551178,
+            "min_cosine": 0.0029318411834537983,
+            "median_cosine": 0.042390044778585434,
+            "grassmann_distance": 3.3854029178619385,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.1687009483575821,
+            "max_cosine": 0.3083414137363434,
+            "min_cosine": 0.040596432983875275,
+            "median_cosine": 0.16369643807411194,
+            "grassmann_distance": 4.438656330108643,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.13225343823432922,
+            "max_cosine": 0.24385395646095276,
+            "min_cosine": 0.016116764396429062,
+            "median_cosine": 0.12200772762298584,
+            "grassmann_distance": 4.55320930480957,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.19284509122371674,
+            "max_cosine": 0.41965794563293457,
+            "min_cosine": 0.004242914263159037,
+            "median_cosine": 0.1822262853384018,
+            "grassmann_distance": 6.176418781280518,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16901780664920807,
+            "max_cosine": 0.36911994218826294,
+            "min_cosine": 0.005413942039012909,
+            "median_cosine": 0.16198641061782837,
+            "grassmann_distance": 6.280256748199463,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3043375015258789,
+            "max_cosine": 0.6481478810310364,
+            "min_cosine": 0.0006709917215630412,
+            "median_cosine": 0.3106260597705841,
+            "grassmann_distance": 8.979209899902344,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27667438983917236,
+            "max_cosine": 0.5795286893844604,
+            "min_cosine": 0.013285793364048004,
+            "median_cosine": 0.277016818523407,
+            "grassmann_distance": 9.176630020141602,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.12522931396961212,
+            "max_cosine": 0.22204285860061646,
+            "min_cosine": 0.008877486921846867,
+            "median_cosine": 0.14348609745502472,
+            "grassmann_distance": 3.235518455505371,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.060294222086668015,
+            "max_cosine": 0.10904423147439957,
+            "min_cosine": 0.01152283325791359,
+            "median_cosine": 0.05916609615087509,
+            "grassmann_distance": 3.3782498836517334,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.1377142369747162,
+            "max_cosine": 0.30823764204978943,
+            "min_cosine": 0.010098639875650406,
+            "median_cosine": 0.13056844472885132,
+            "grassmann_distance": 4.537928581237793,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10985380411148071,
+            "max_cosine": 0.212546244263649,
+            "min_cosine": 0.007033813279122114,
+            "median_cosine": 0.11095066368579865,
+            "grassmann_distance": 4.624094009399414,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1871069371700287,
+            "max_cosine": 0.41516417264938354,
+            "min_cosine": 0.010449863038957119,
+            "median_cosine": 0.18718960881233215,
+            "grassmann_distance": 6.200830936431885,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16482794284820557,
+            "max_cosine": 0.340844988822937,
+            "min_cosine": 0.0062417928129434586,
+            "median_cosine": 0.14767423272132874,
+            "grassmann_distance": 6.297901630401611,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.28036749362945557,
+            "max_cosine": 0.6000202298164368,
+            "min_cosine": 0.012758789584040642,
+            "median_cosine": 0.2761077880859375,
+            "grassmann_distance": 9.147836685180664,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26690948009490967,
+            "max_cosine": 0.5785624980926514,
+            "min_cosine": 0.0034766816534101963,
+            "median_cosine": 0.25320887565612793,
+            "grassmann_distance": 9.245955467224121,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.15597625076770782,
+            "max_cosine": 0.3769059181213379,
+            "min_cosine": 0.0003448218631092459,
+            "median_cosine": 0.12542375922203064,
+            "grassmann_distance": 3.171889543533325,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07064191997051239,
+            "max_cosine": 0.14620019495487213,
+            "min_cosine": 0.01079248171299696,
+            "median_cosine": 0.07595332711935043,
+            "grassmann_distance": 3.355858325958252,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.14312168955802917,
+            "max_cosine": 0.3872658610343933,
+            "min_cosine": 0.007857144810259342,
+            "median_cosine": 0.11512362211942673,
+            "grassmann_distance": 4.5237603187561035,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10050666332244873,
+            "max_cosine": 0.20065660774707794,
+            "min_cosine": 0.016395458951592445,
+            "median_cosine": 0.09458759427070618,
+            "grassmann_distance": 4.6521148681640625,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1815376877784729,
+            "max_cosine": 0.4848352372646332,
+            "min_cosine": 0.007530835457146168,
+            "median_cosine": 0.16290125250816345,
+            "grassmann_distance": 6.227139472961426,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.15504051744937897,
+            "max_cosine": 0.3774564564228058,
+            "min_cosine": 0.0034177766647189856,
+            "median_cosine": 0.13428443670272827,
+            "grassmann_distance": 6.342935085296631,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.27810949087142944,
+            "max_cosine": 0.625818133354187,
+            "min_cosine": 0.003787402529269457,
+            "median_cosine": 0.2689107358455658,
+            "grassmann_distance": 9.166210174560547,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2647559642791748,
+            "max_cosine": 0.5883216261863708,
+            "min_cosine": 0.005881555378437042,
+            "median_cosine": 0.26062285900115967,
+            "grassmann_distance": 9.264768600463867,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.19640737771987915,
+            "max_cosine": 0.4660199284553528,
+            "min_cosine": 0.015320563688874245,
+            "median_cosine": 0.17853258550167084,
+            "grassmann_distance": 3.0860323905944824,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07708117365837097,
+            "max_cosine": 0.15234188735485077,
+            "min_cosine": 0.019675718620419502,
+            "median_cosine": 0.07533562183380127,
+            "grassmann_distance": 3.3413610458374023,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.20261403918266296,
+            "max_cosine": 0.49984318017959595,
+            "min_cosine": 0.013920024037361145,
+            "median_cosine": 0.19574424624443054,
+            "grassmann_distance": 4.338357925415039,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11177907884120941,
+            "max_cosine": 0.23907257616519928,
+            "min_cosine": 0.009839791804552078,
+            "median_cosine": 0.08916276693344116,
+            "grassmann_distance": 4.618910312652588,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.21931393444538116,
+            "max_cosine": 0.5374801158905029,
+            "min_cosine": 0.011518585495650768,
+            "median_cosine": 0.2119927704334259,
+            "grassmann_distance": 6.059015274047852,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17307180166244507,
+            "max_cosine": 0.3716738820075989,
+            "min_cosine": 0.003186117159202695,
+            "median_cosine": 0.16341480612754822,
+            "grassmann_distance": 6.2627153396606445,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2985503673553467,
+            "max_cosine": 0.6493198871612549,
+            "min_cosine": 0.007129206787794828,
+            "median_cosine": 0.2934366762638092,
+            "grassmann_distance": 9.019550323486328,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2694365680217743,
+            "max_cosine": 0.5917092561721802,
+            "min_cosine": 0.0031068369280546904,
+            "median_cosine": 0.25857076048851013,
+            "grassmann_distance": 9.231391906738281,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.2960938513278961,
+            "max_cosine": 0.5173339247703552,
+            "min_cosine": 0.06588456779718399,
+            "median_cosine": 0.3126974105834961,
+            "grassmann_distance": 2.858107089996338,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.06883540004491806,
+            "max_cosine": 0.1394503116607666,
+            "min_cosine": 0.00491670798510313,
+            "median_cosine": 0.07177206873893738,
+            "grassmann_distance": 3.3598265647888184,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.25805598497390747,
+            "max_cosine": 0.5452751517295837,
+            "min_cosine": 0.011599482968449593,
+            "median_cosine": 0.20032863318920135,
+            "grassmann_distance": 4.170464038848877,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11460448801517487,
+            "max_cosine": 0.24422982335090637,
+            "min_cosine": 0.006530705373734236,
+            "median_cosine": 0.10254009068012238,
+            "grassmann_distance": 4.609597206115723,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2775481045246124,
+            "max_cosine": 0.6323512196540833,
+            "min_cosine": 0.013050012290477753,
+            "median_cosine": 0.2619820535182953,
+            "grassmann_distance": 5.80645751953125,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.15930865705013275,
+            "max_cosine": 0.3878422975540161,
+            "min_cosine": 0.0050576673820614815,
+            "median_cosine": 0.14757418632507324,
+            "grassmann_distance": 6.3237714767456055,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3312772810459137,
+            "max_cosine": 0.7441564202308655,
+            "min_cosine": 0.0008493926143273711,
+            "median_cosine": 0.3224235773086548,
+            "grassmann_distance": 8.794634819030762,
+            "overlap_frac_gt_0.5": 0.24,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2705498933792114,
+            "max_cosine": 0.5690886974334717,
+            "min_cosine": 0.0059233615174889565,
+            "median_cosine": 0.2567041516304016,
+            "grassmann_distance": 9.218993186950684,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.11487092822790146,
+            "max_cosine": 0.27594059705734253,
+            "min_cosine": 0.01718343235552311,
+            "median_cosine": 0.09398073703050613,
+            "grassmann_distance": 3.2598373889923096,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.09662076830863953,
+            "max_cosine": 0.2074495553970337,
+            "min_cosine": 0.005378613248467445,
+            "median_cosine": 0.07000018656253815,
+            "grassmann_distance": 3.2998149394989014,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.14232322573661804,
+            "max_cosine": 0.32058507204055786,
+            "min_cosine": 0.01824839971959591,
+            "median_cosine": 0.1341659128665924,
+            "grassmann_distance": 4.524089813232422,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12499313056468964,
+            "max_cosine": 0.25833284854888916,
+            "min_cosine": 0.00022422318579629064,
+            "median_cosine": 0.10439828783273697,
+            "grassmann_distance": 4.577481746673584,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.19168055057525635,
+            "max_cosine": 0.3922285735607147,
+            "min_cosine": 0.013109691441059113,
+            "median_cosine": 0.17110058665275574,
+            "grassmann_distance": 6.177628040313721,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16631416976451874,
+            "max_cosine": 0.35137826204299927,
+            "min_cosine": 0.002123564714565873,
+            "median_cosine": 0.16721028089523315,
+            "grassmann_distance": 6.291612148284912,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2833731174468994,
+            "max_cosine": 0.5767765641212463,
+            "min_cosine": 0.005404178984463215,
+            "median_cosine": 0.2744273543357849,
+            "grassmann_distance": 9.127861022949219,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26555338501930237,
+            "max_cosine": 0.5755922198295593,
+            "min_cosine": 0.0021528340876102448,
+            "median_cosine": 0.24812518060207367,
+            "grassmann_distance": 9.255997657775879,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.1194794774055481,
+            "max_cosine": 0.28857916593551636,
+            "min_cosine": 0.008022165857255459,
+            "median_cosine": 0.09702242165803909,
+            "grassmann_distance": 3.2501564025878906,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08349420130252838,
+            "max_cosine": 0.13766451179981232,
+            "min_cosine": 0.02296861633658409,
+            "median_cosine": 0.09259465336799622,
+            "grassmann_distance": 3.3268418312072754,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.14298607409000397,
+            "max_cosine": 0.3340660333633423,
+            "min_cosine": 0.0031880747992545366,
+            "median_cosine": 0.15062052011489868,
+            "grassmann_distance": 4.521712779998779,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11988554149866104,
+            "max_cosine": 0.22232532501220703,
+            "min_cosine": 0.009731604717671871,
+            "median_cosine": 0.12547829747200012,
+            "grassmann_distance": 4.592152118682861,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.18068765103816986,
+            "max_cosine": 0.4099983274936676,
+            "min_cosine": 0.011579467914998531,
+            "median_cosine": 0.17258986830711365,
+            "grassmann_distance": 6.228997707366943,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17345336079597473,
+            "max_cosine": 0.35813456773757935,
+            "min_cosine": 0.009767835959792137,
+            "median_cosine": 0.1748693287372589,
+            "grassmann_distance": 6.257791042327881,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.278766930103302,
+            "max_cosine": 0.6035140156745911,
+            "min_cosine": 0.006768528837710619,
+            "median_cosine": 0.2758011221885681,
+            "grassmann_distance": 9.160967826843262,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26915356516838074,
+            "max_cosine": 0.5788736939430237,
+            "min_cosine": 0.0009679659851826727,
+            "median_cosine": 0.2705288529396057,
+            "grassmann_distance": 9.23042106628418,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.1993659883737564,
+            "max_cosine": 0.4006436765193939,
+            "min_cosine": 0.06556876748800278,
+            "median_cosine": 0.15215034782886505,
+            "grassmann_distance": 3.0724775791168213,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08839808404445648,
+            "max_cosine": 0.22000090777873993,
+            "min_cosine": 0.006818090565502644,
+            "median_cosine": 0.0700085386633873,
+            "grassmann_distance": 3.317911148071289,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.20967383682727814,
+            "max_cosine": 0.4755319058895111,
+            "min_cosine": 0.034037236124277115,
+            "median_cosine": 0.1770121455192566,
+            "grassmann_distance": 4.31388521194458,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1202705055475235,
+            "max_cosine": 0.30915704369544983,
+            "min_cosine": 0.0038562011905014515,
+            "median_cosine": 0.10879470407962799,
+            "grassmann_distance": 4.5926995277404785,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.24269798398017883,
+            "max_cosine": 0.5544005632400513,
+            "min_cosine": 0.02598728984594345,
+            "median_cosine": 0.22063954174518585,
+            "grassmann_distance": 5.956084251403809,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1669970154762268,
+            "max_cosine": 0.3731097877025604,
+            "min_cosine": 0.003995405975729227,
+            "median_cosine": 0.15824362635612488,
+            "grassmann_distance": 6.288387775421143,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3070235550403595,
+            "max_cosine": 0.6731070280075073,
+            "min_cosine": 0.0029995262157171965,
+            "median_cosine": 0.3042604923248291,
+            "grassmann_distance": 8.964761734008789,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2700892984867096,
+            "max_cosine": 0.5719608068466187,
+            "min_cosine": 0.010722997598350048,
+            "median_cosine": 0.26577818393707275,
+            "grassmann_distance": 9.221634864807129,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "2000": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.09546104818582535,
+            "max_cosine": 0.1962926983833313,
+            "min_cosine": 0.021959317848086357,
+            "median_cosine": 0.08353574573993683,
+            "grassmann_distance": 3.301370620727539,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.09305384755134583,
+            "max_cosine": 0.18167278170585632,
+            "min_cosine": 0.05159785971045494,
+            "median_cosine": 0.07731923460960388,
+            "grassmann_distance": 3.3054285049438477,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.12659291923046112,
+            "max_cosine": 0.23406167328357697,
+            "min_cosine": 0.023495757952332497,
+            "median_cosine": 0.11676176637411118,
+            "grassmann_distance": 4.57119083404541,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11690676212310791,
+            "max_cosine": 0.2560981214046478,
+            "min_cosine": 0.0058211893774569035,
+            "median_cosine": 0.10879594087600708,
+            "grassmann_distance": 4.602357864379883,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.168761745095253,
+            "max_cosine": 0.3746464252471924,
+            "min_cosine": 0.03043971210718155,
+            "median_cosine": 0.1584879606962204,
+            "grassmann_distance": 6.2795023918151855,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16574439406394958,
+            "max_cosine": 0.36689889430999756,
+            "min_cosine": 0.002825662028044462,
+            "median_cosine": 0.14656463265419006,
+            "grassmann_distance": 6.293667793273926,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.249288409948349,
+            "max_cosine": 0.5712673664093018,
+            "min_cosine": 0.0011403808603063226,
+            "median_cosine": 0.23605188727378845,
+            "grassmann_distance": 9.373019218444824,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.26803550124168396,
+            "max_cosine": 0.5860792398452759,
+            "min_cosine": 0.003344235010445118,
+            "median_cosine": 0.26074856519699097,
+            "grassmann_distance": 9.239434242248535,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.207402303814888,
+            "max_cosine": 0.4829837381839752,
+            "min_cosine": 0.01711062155663967,
+            "median_cosine": 0.1872503161430359,
+            "grassmann_distance": 3.0623321533203125,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.07113313674926758,
+            "max_cosine": 0.12452726066112518,
+            "min_cosine": 0.007637932430952787,
+            "median_cosine": 0.08685243874788284,
+            "grassmann_distance": 3.3543219566345215,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.196232408285141,
+            "max_cosine": 0.5556544065475464,
+            "min_cosine": 0.023179486393928528,
+            "median_cosine": 0.1694977730512619,
+            "grassmann_distance": 4.361721515655518,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.10541294515132904,
+            "max_cosine": 0.2133641391992569,
+            "min_cosine": 0.010621541179716587,
+            "median_cosine": 0.09650729596614838,
+            "grassmann_distance": 4.6371026039123535,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.21669907867908478,
+            "max_cosine": 0.6152551770210266,
+            "min_cosine": 0.0028611428570002317,
+            "median_cosine": 0.21159738302230835,
+            "grassmann_distance": 6.074661731719971,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1622181087732315,
+            "max_cosine": 0.3785194158554077,
+            "min_cosine": 0.00044425425585359335,
+            "median_cosine": 0.15642492473125458,
+            "grassmann_distance": 6.311178207397461,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2958759367465973,
+            "max_cosine": 0.695650577545166,
+            "min_cosine": 0.009699320420622826,
+            "median_cosine": 0.28263145685195923,
+            "grassmann_distance": 9.044149398803711,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27584177255630493,
+            "max_cosine": 0.6084663271903992,
+            "min_cosine": 0.002016170881688595,
+            "median_cosine": 0.26763761043548584,
+            "grassmann_distance": 9.18392276763916,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.2733575403690338,
+            "max_cosine": 0.6762537360191345,
+            "min_cosine": 0.0021729031577706337,
+            "median_cosine": 0.30037224292755127,
+            "grassmann_distance": 2.9266202449798584,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.06954528391361237,
+            "max_cosine": 0.15533040463924408,
+            "min_cosine": 0.007830877788364887,
+            "median_cosine": 0.0649455338716507,
+            "grassmann_distance": 3.3584744930267334,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.25881844758987427,
+            "max_cosine": 0.7145179510116577,
+            "min_cosine": 0.01769438572227955,
+            "median_cosine": 0.23209494352340698,
+            "grassmann_distance": 4.1706342697143555,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12174421548843384,
+            "max_cosine": 0.28754711151123047,
+            "min_cosine": 0.00808534026145935,
+            "median_cosine": 0.11876998841762543,
+            "grassmann_distance": 4.587886333465576,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.26802247762680054,
+            "max_cosine": 0.7477148771286011,
+            "min_cosine": 0.020580656826496124,
+            "median_cosine": 0.24933505058288574,
+            "grassmann_distance": 5.849573612213135,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16964702308177948,
+            "max_cosine": 0.3590511679649353,
+            "min_cosine": 0.00986443366855383,
+            "median_cosine": 0.15603837370872498,
+            "grassmann_distance": 6.276022911071777,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3473567068576813,
+            "max_cosine": 0.8274646401405334,
+            "min_cosine": 0.0029390850104391575,
+            "median_cosine": 0.33021432161331177,
+            "grassmann_distance": 8.67688274383545,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2694772481918335,
+            "max_cosine": 0.601647675037384,
+            "min_cosine": 0.0039555588737130165,
+            "median_cosine": 0.25890785455703735,
+            "grassmann_distance": 9.229718208312988,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.22548405826091766,
+            "max_cosine": 0.5602646470069885,
+            "min_cosine": 0.03316202387213707,
+            "median_cosine": 0.17335857450962067,
+            "grassmann_distance": 3.022705316543579,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11170222610235214,
+            "max_cosine": 0.239027738571167,
+            "min_cosine": 0.03687608987092972,
+            "median_cosine": 0.07820025831460953,
+            "grassmann_distance": 3.2652156352996826,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.25461557507514954,
+            "max_cosine": 0.6032109260559082,
+            "min_cosine": 0.013334546238183975,
+            "median_cosine": 0.20229114592075348,
+            "grassmann_distance": 4.180465221405029,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1291736662387848,
+            "max_cosine": 0.31861311197280884,
+            "min_cosine": 0.01877414807677269,
+            "median_cosine": 0.12041601538658142,
+            "grassmann_distance": 4.563909530639648,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2941769063472748,
+            "max_cosine": 0.6763735413551331,
+            "min_cosine": 0.009814288467168808,
+            "median_cosine": 0.297962486743927,
+            "grassmann_distance": 5.727368354797363,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1872471272945404,
+            "max_cosine": 0.4178435206413269,
+            "min_cosine": 0.017153259366750717,
+            "median_cosine": 0.17984119057655334,
+            "grassmann_distance": 6.19801139831543,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.38690826296806335,
+            "max_cosine": 0.7943717241287231,
+            "min_cosine": 0.0026937483344227076,
+            "median_cosine": 0.3877951502799988,
+            "grassmann_distance": 8.386348724365234,
+            "overlap_frac_gt_0.5": 0.36,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.28001025319099426,
+            "max_cosine": 0.6273336410522461,
+            "min_cosine": 0.0027904075104743242,
+            "median_cosine": 0.27125346660614014,
+            "grassmann_distance": 9.157209396362305,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.3342970013618469,
+            "max_cosine": 0.622663140296936,
+            "min_cosine": 0.10814624279737473,
+            "median_cosine": 0.2289671003818512,
+            "grassmann_distance": 2.771968364715576,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11134414374828339,
+            "max_cosine": 0.20422232151031494,
+            "min_cosine": 0.03883005678653717,
+            "median_cosine": 0.07999702543020248,
+            "grassmann_distance": 3.2652862071990967,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.3103368580341339,
+            "max_cosine": 0.655444324016571,
+            "min_cosine": 0.020672621205449104,
+            "median_cosine": 0.2816220223903656,
+            "grassmann_distance": 4.006669044494629,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11781848967075348,
+            "max_cosine": 0.29796791076660156,
+            "min_cosine": 0.015294344164431095,
+            "median_cosine": 0.1114838719367981,
+            "grassmann_distance": 4.601181983947754,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.31103307008743286,
+            "max_cosine": 0.6985112428665161,
+            "min_cosine": 0.007383339572697878,
+            "median_cosine": 0.3111380934715271,
+            "grassmann_distance": 5.656601905822754,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16703581809997559,
+            "max_cosine": 0.3827382028102875,
+            "min_cosine": 0.0028966255486011505,
+            "median_cosine": 0.15084508061408997,
+            "grassmann_distance": 6.288973331451416,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3612891137599945,
+            "max_cosine": 0.8108705282211304,
+            "min_cosine": 0.0036287386901676655,
+            "median_cosine": 0.35094764828681946,
+            "grassmann_distance": 8.574663162231445,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27891287207603455,
+            "max_cosine": 0.6095982789993286,
+            "min_cosine": 0.0053284489549696445,
+            "median_cosine": 0.26622241735458374,
+            "grassmann_distance": 9.161046981811523,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.08557220548391342,
+            "max_cosine": 0.1812337189912796,
+            "min_cosine": 0.007157036103308201,
+            "median_cosine": 0.07042597979307175,
+            "grassmann_distance": 3.3230690956115723,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.06001235172152519,
+            "max_cosine": 0.11182920634746552,
+            "min_cosine": 0.013554265722632408,
+            "median_cosine": 0.04821076616644859,
+            "grassmann_distance": 3.379161834716797,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.12438324838876724,
+            "max_cosine": 0.2822398543357849,
+            "min_cosine": 0.004171035718172789,
+            "median_cosine": 0.09968462586402893,
+            "grassmann_distance": 4.580795764923096,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.09542655944824219,
+            "max_cosine": 0.2073066383600235,
+            "min_cosine": 0.007708019111305475,
+            "median_cosine": 0.08721751719713211,
+            "grassmann_distance": 4.668691158294678,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.18942414224147797,
+            "max_cosine": 0.40645211935043335,
+            "min_cosine": 0.0018066315678879619,
+            "median_cosine": 0.18993520736694336,
+            "grassmann_distance": 6.189257621765137,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.15870033204555511,
+            "max_cosine": 0.3845037817955017,
+            "min_cosine": 0.007519957609474659,
+            "median_cosine": 0.14486120641231537,
+            "grassmann_distance": 6.3264384269714355,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.28908875584602356,
+            "max_cosine": 0.6085326075553894,
+            "min_cosine": 0.004270147066563368,
+            "median_cosine": 0.2995513081550598,
+            "grassmann_distance": 9.08934211730957,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.265997976064682,
+            "max_cosine": 0.5622195601463318,
+            "min_cosine": 0.007364288903772831,
+            "median_cosine": 0.26421502232551575,
+            "grassmann_distance": 9.25162124633789,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.07101716101169586,
+            "max_cosine": 0.13816389441490173,
+            "min_cosine": 0.014781010337173939,
+            "median_cosine": 0.06988588720560074,
+            "grassmann_distance": 3.354520559310913,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.10076186805963516,
+            "max_cosine": 0.15055255591869354,
+            "min_cosine": 0.0470278300344944,
+            "median_cosine": 0.10964249074459076,
+            "grassmann_distance": 3.2877204418182373,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.10950616747140884,
+            "max_cosine": 0.21671923995018005,
+            "min_cosine": 0.006969633512198925,
+            "median_cosine": 0.12105363607406616,
+            "grassmann_distance": 4.624178886413574,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.11396710574626923,
+            "max_cosine": 0.2591526508331299,
+            "min_cosine": 0.010822713375091553,
+            "median_cosine": 0.10514521598815918,
+            "grassmann_distance": 4.611146926879883,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.14931242167949677,
+            "max_cosine": 0.32145705819129944,
+            "min_cosine": 0.0010872038546949625,
+            "median_cosine": 0.13621214032173157,
+            "grassmann_distance": 6.3656744956970215,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1617836058139801,
+            "max_cosine": 0.3893511891365051,
+            "min_cosine": 0.008481569588184357,
+            "median_cosine": 0.14815737307071686,
+            "grassmann_distance": 6.311263084411621,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2566865086555481,
+            "max_cosine": 0.5913683176040649,
+            "min_cosine": 0.001784557825885713,
+            "median_cosine": 0.2444077730178833,
+            "grassmann_distance": 9.3204345703125,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2549346089363098,
+            "max_cosine": 0.5314694046974182,
+            "min_cosine": 0.006311493460088968,
+            "median_cosine": 0.24829870462417603,
+            "grassmann_distance": 9.329177856445312,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.15182344615459442,
+            "max_cosine": 0.2704424560070038,
+            "min_cosine": 0.017825394868850708,
+            "median_cosine": 0.17884814739227295,
+            "grassmann_distance": 3.177155017852783,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.09078393876552582,
+            "max_cosine": 0.1858728975057602,
+            "min_cosine": 0.01741868630051613,
+            "median_cosine": 0.07888052612543106,
+            "grassmann_distance": 3.311277151107788,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.18792983889579773,
+            "max_cosine": 0.39357614517211914,
+            "min_cosine": 0.008462448604404926,
+            "median_cosine": 0.17305465042591095,
+            "grassmann_distance": 4.384702205657959,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.133340984582901,
+            "max_cosine": 0.2532496452331543,
+            "min_cosine": 0.012898990884423256,
+            "median_cosine": 0.12384256720542908,
+            "grassmann_distance": 4.548950672149658,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.24783459305763245,
+            "max_cosine": 0.5083535313606262,
+            "min_cosine": 0.0030905515886843204,
+            "median_cosine": 0.23093554377555847,
+            "grassmann_distance": 5.932983875274658,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18473945558071136,
+            "max_cosine": 0.43984076380729675,
+            "min_cosine": 0.007027401588857174,
+            "median_cosine": 0.16299960017204285,
+            "grassmann_distance": 6.210845470428467,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3263688385486603,
+            "max_cosine": 0.6787647008895874,
+            "min_cosine": 0.0012192525900900364,
+            "median_cosine": 0.3140054941177368,
+            "grassmann_distance": 8.824990272521973,
+            "overlap_frac_gt_0.5": 0.24,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.27828118205070496,
+            "max_cosine": 0.6075574159622192,
+            "min_cosine": 0.0068260240368545055,
+            "median_cosine": 0.2697562575340271,
+            "grassmann_distance": 9.169376373291016,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "8000": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.31467515230178833,
+            "max_cosine": 0.7432067394256592,
+            "min_cosine": 0.05498747527599335,
+            "median_cosine": 0.2648165225982666,
+            "grassmann_distance": 2.827972888946533,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.12256859242916107,
+            "max_cosine": 0.3773822486400604,
+            "min_cosine": 0.0020574487280100584,
+            "median_cosine": 0.08197034895420074,
+            "grassmann_distance": 3.2482197284698486,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.23261860013008118,
+            "max_cosine": 0.7596683502197266,
+            "min_cosine": 0.005743990186601877,
+            "median_cosine": 0.17830485105514526,
+            "grassmann_distance": 4.266204357147217,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.14340035617351532,
+            "max_cosine": 0.47915324568748474,
+            "min_cosine": 0.0032987722661346197,
+            "median_cosine": 0.10439964383840561,
+            "grassmann_distance": 4.526567459106445,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.20760314166545868,
+            "max_cosine": 0.7996253371238708,
+            "min_cosine": 0.010709444992244244,
+            "median_cosine": 0.14346322417259216,
+            "grassmann_distance": 6.131613254547119,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.15894843637943268,
+            "max_cosine": 0.6861923933029175,
+            "min_cosine": 0.001994501566514373,
+            "median_cosine": 0.12786874175071716,
+            "grassmann_distance": 6.336781978607178,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2386602908372879,
+            "max_cosine": 0.8572450876235962,
+            "min_cosine": 0.001447699498385191,
+            "median_cosine": 0.20865824818611145,
+            "grassmann_distance": 9.460602760314941,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.22504617273807526,
+            "max_cosine": 0.8236757516860962,
+            "min_cosine": 0.007330466527491808,
+            "median_cosine": 0.19199594855308533,
+            "grassmann_distance": 9.55122184753418,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.4030868411064148,
+            "max_cosine": 0.7143933176994324,
+            "min_cosine": 0.047210853546857834,
+            "median_cosine": 0.4257136881351471,
+            "grassmann_distance": 2.614258050918579,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.12146572023630142,
+            "max_cosine": 0.1935681402683258,
+            "min_cosine": 0.03376145288348198,
+            "median_cosine": 0.10983249545097351,
+            "grassmann_distance": 3.2425549030303955,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.32806482911109924,
+            "max_cosine": 0.7419923543930054,
+            "min_cosine": 0.04167591780424118,
+            "median_cosine": 0.29070013761520386,
+            "grassmann_distance": 3.94960880279541,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1563934087753296,
+            "max_cosine": 0.3557591438293457,
+            "min_cosine": 0.011391179636120796,
+            "median_cosine": 0.13555537164211273,
+            "grassmann_distance": 4.4800639152526855,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.3038535416126251,
+            "max_cosine": 0.7818602323532104,
+            "min_cosine": 0.0030650014523416758,
+            "median_cosine": 0.27900972962379456,
+            "grassmann_distance": 5.695291042327881,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.20874924957752228,
+            "max_cosine": 0.5885765552520752,
+            "min_cosine": 0.009779650717973709,
+            "median_cosine": 0.19671888649463654,
+            "grassmann_distance": 6.107598304748535,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3730506896972656,
+            "max_cosine": 0.857637882232666,
+            "min_cosine": 0.0030759251676499844,
+            "median_cosine": 0.36240655183792114,
+            "grassmann_distance": 8.49078369140625,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.3203884959220886,
+            "max_cosine": 0.8053873777389526,
+            "min_cosine": 0.00965478178113699,
+            "median_cosine": 0.3210238218307495,
+            "grassmann_distance": 8.868244171142578,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.37445491552352905,
+            "max_cosine": 0.6560853719711304,
+            "min_cosine": 0.21020004153251648,
+            "median_cosine": 0.32900968194007874,
+            "grassmann_distance": 2.668287992477417,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08213713765144348,
+            "max_cosine": 0.18915830552577972,
+            "min_cosine": 0.007247971370816231,
+            "median_cosine": 0.08041957020759583,
+            "grassmann_distance": 3.331413507461548,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.29608577489852905,
+            "max_cosine": 0.6803557872772217,
+            "min_cosine": 0.004484520759433508,
+            "median_cosine": 0.2805577218532562,
+            "grassmann_distance": 4.055200576782227,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.13523177802562714,
+            "max_cosine": 0.38035887479782104,
+            "min_cosine": 0.010850109159946442,
+            "median_cosine": 0.12333855032920837,
+            "grassmann_distance": 4.547165393829346,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.30195164680480957,
+            "max_cosine": 0.7304841876029968,
+            "min_cosine": 0.0076124719344079494,
+            "median_cosine": 0.26791542768478394,
+            "grassmann_distance": 5.702696800231934,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.21192757785320282,
+            "max_cosine": 0.5839182734489441,
+            "min_cosine": 0.023006046190857887,
+            "median_cosine": 0.17649999260902405,
+            "grassmann_distance": 6.093507289886475,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.37229815125465393,
+            "max_cosine": 0.8108363747596741,
+            "min_cosine": 0.0027384276036173105,
+            "median_cosine": 0.3708260655403137,
+            "grassmann_distance": 8.495681762695312,
+            "overlap_frac_gt_0.5": 0.34,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.30623483657836914,
+            "max_cosine": 0.8646398186683655,
+            "min_cosine": 0.0060637956485152245,
+            "median_cosine": 0.2886967957019806,
+            "grassmann_distance": 8.97488021850586,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.43233737349510193,
+            "max_cosine": 0.7674406170845032,
+            "min_cosine": 0.16199612617492676,
+            "median_cosine": 0.47133001685142517,
+            "grassmann_distance": 2.5390565395355225,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11150171607732773,
+            "max_cosine": 0.22438181936740875,
+            "min_cosine": 0.015752557665109634,
+            "median_cosine": 0.07237754762172699,
+            "grassmann_distance": 3.2669520378112793,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.33625978231430054,
+            "max_cosine": 0.797993540763855,
+            "min_cosine": 0.037325482815504074,
+            "median_cosine": 0.313612699508667,
+            "grassmann_distance": 3.924433708190918,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1628749519586563,
+            "max_cosine": 0.4388253092765808,
+            "min_cosine": 0.023925943300127983,
+            "median_cosine": 0.13853247463703156,
+            "grassmann_distance": 4.461792469024658,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.31918054819107056,
+            "max_cosine": 0.8178985714912415,
+            "min_cosine": 0.0016578622162342072,
+            "median_cosine": 0.27572017908096313,
+            "grassmann_distance": 5.6268205642700195,
+            "overlap_frac_gt_0.5": 0.25,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.20628364384174347,
+            "max_cosine": 0.6587392091751099,
+            "min_cosine": 0.01746649108827114,
+            "median_cosine": 0.17190511524677277,
+            "grassmann_distance": 6.122511386871338,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3864923119544983,
+            "max_cosine": 0.855829119682312,
+            "min_cosine": 0.02222341112792492,
+            "median_cosine": 0.3843485116958618,
+            "grassmann_distance": 8.394023895263672,
+            "overlap_frac_gt_0.5": 0.34,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.29280734062194824,
+            "max_cosine": 0.8796809911727905,
+            "min_cosine": 0.008574803359806538,
+            "median_cosine": 0.27539846301078796,
+            "grassmann_distance": 9.069698333740234,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.4587586522102356,
+            "max_cosine": 0.8852230906486511,
+            "min_cosine": 0.006456984672695398,
+            "median_cosine": 0.4932143986225128,
+            "grassmann_distance": 2.5004656314849854,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08374103903770447,
+            "max_cosine": 0.20359840989112854,
+            "min_cosine": 0.006879859138280153,
+            "median_cosine": 0.04618533328175545,
+            "grassmann_distance": 3.3284246921539307,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.412522554397583,
+            "max_cosine": 0.9085534811019897,
+            "min_cosine": 0.04875215142965317,
+            "median_cosine": 0.34361881017684937,
+            "grassmann_distance": 3.6874730587005615,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.12286297976970673,
+            "max_cosine": 0.3414272367954254,
+            "min_cosine": 0.006908845156431198,
+            "median_cosine": 0.11102870106697083,
+            "grassmann_distance": 4.586569309234619,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.35999780893325806,
+            "max_cosine": 0.9217206239700317,
+            "min_cosine": 0.00041508630965836346,
+            "median_cosine": 0.322140097618103,
+            "grassmann_distance": 5.448922634124756,
+            "overlap_frac_gt_0.5": 0.25,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18355491757392883,
+            "max_cosine": 0.6093549728393555,
+            "min_cosine": 0.0017173322848975658,
+            "median_cosine": 0.15654072165489197,
+            "grassmann_distance": 6.2218146324157715,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.36437278985977173,
+            "max_cosine": 0.9456762671470642,
+            "min_cosine": 0.0025485276710242033,
+            "median_cosine": 0.34188494086265564,
+            "grassmann_distance": 8.571637153625488,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2848038375377655,
+            "max_cosine": 0.8202078342437744,
+            "min_cosine": 0.0009645693353377283,
+            "median_cosine": 0.27073657512664795,
+            "grassmann_distance": 9.122960090637207,
+            "overlap_frac_gt_0.5": 0.12,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.23253066837787628,
+            "max_cosine": 0.7779754996299744,
+            "min_cosine": 0.009031785652041435,
+            "median_cosine": 0.1179061084985733,
+            "grassmann_distance": 3.029339551925659,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.12487798929214478,
+            "max_cosine": 0.36865174770355225,
+            "min_cosine": 0.009926612488925457,
+            "median_cosine": 0.07980268448591232,
+            "grassmann_distance": 3.2425975799560547,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.19945307075977325,
+            "max_cosine": 0.7878941893577576,
+            "min_cosine": 0.009603888727724552,
+            "median_cosine": 0.13615354895591736,
+            "grassmann_distance": 4.3675923347473145,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.15049438178539276,
+            "max_cosine": 0.5819450616836548,
+            "min_cosine": 0.010330777615308762,
+            "median_cosine": 0.10326487571001053,
+            "grassmann_distance": 4.51023530960083,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.20091576874256134,
+            "max_cosine": 0.8094328045845032,
+            "min_cosine": 0.009029105305671692,
+            "median_cosine": 0.15640877187252045,
+            "grassmann_distance": 6.154811859130859,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1718500852584839,
+            "max_cosine": 0.7352257370948792,
+            "min_cosine": 0.0008241565083153546,
+            "median_cosine": 0.1363632082939148,
+            "grassmann_distance": 6.280105113983154,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.26985597610473633,
+            "max_cosine": 0.8377291560173035,
+            "min_cosine": 0.00470811827108264,
+            "median_cosine": 0.2557840943336487,
+            "grassmann_distance": 9.233404159545898,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2604753375053406,
+            "max_cosine": 0.8770440816879272,
+            "min_cosine": 0.010173039510846138,
+            "median_cosine": 0.2440744787454605,
+            "grassmann_distance": 9.299882888793945,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.2267036736011505,
+            "max_cosine": 0.7031884789466858,
+            "min_cosine": 0.01394354086369276,
+            "median_cosine": 0.13919486105442047,
+            "grassmann_distance": 3.0349245071411133,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.13178738951683044,
+            "max_cosine": 0.3530740737915039,
+            "min_cosine": 0.0331297442317009,
+            "median_cosine": 0.08696421980857849,
+            "grassmann_distance": 3.2249953746795654,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.18144148588180542,
+            "max_cosine": 0.714057207107544,
+            "min_cosine": 0.010633205063641071,
+            "median_cosine": 0.11328399181365967,
+            "grassmann_distance": 4.420190811157227,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.13773444294929504,
+            "max_cosine": 0.5329095721244812,
+            "min_cosine": 0.0021585640497505665,
+            "median_cosine": 0.10424396395683289,
+            "grassmann_distance": 4.546821117401123,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.17271387577056885,
+            "max_cosine": 0.747927188873291,
+            "min_cosine": 0.002907157875597477,
+            "median_cosine": 0.12120933085680008,
+            "grassmann_distance": 6.280241966247559,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1600128412246704,
+            "max_cosine": 0.7844871878623962,
+            "min_cosine": 0.001652304083108902,
+            "median_cosine": 0.13144811987876892,
+            "grassmann_distance": 6.334028244018555,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.22922565042972565,
+            "max_cosine": 0.8036587834358215,
+            "min_cosine": 0.0030296333134174347,
+            "median_cosine": 0.20454439520835876,
+            "grassmann_distance": 9.520560264587402,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2312111258506775,
+            "max_cosine": 0.911238968372345,
+            "min_cosine": 0.006499298382550478,
+            "median_cosine": 0.20579174160957336,
+            "grassmann_distance": 9.507445335388184,
+            "overlap_frac_gt_0.5": 0.02,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.30604881048202515,
+            "max_cosine": 0.8247849941253662,
+            "min_cosine": 0.05157992243766785,
+            "median_cosine": 0.22114458680152893,
+            "grassmann_distance": 2.859509229660034,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.08616439998149872,
+            "max_cosine": 0.20472100377082825,
+            "min_cosine": 0.0030224097426980734,
+            "median_cosine": 0.0642377957701683,
+            "grassmann_distance": 3.3225440979003906,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.29163578152656555,
+            "max_cosine": 0.8425911664962769,
+            "min_cosine": 0.01193135604262352,
+            "median_cosine": 0.25482168793678284,
+            "grassmann_distance": 4.073314189910889,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1370658576488495,
+            "max_cosine": 0.3765639662742615,
+            "min_cosine": 0.01450399961322546,
+            "median_cosine": 0.11303399503231049,
+            "grassmann_distance": 4.542552471160889,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2772851288318634,
+            "max_cosine": 0.8592262864112854,
+            "min_cosine": 0.003847302868962288,
+            "median_cosine": 0.23709064722061157,
+            "grassmann_distance": 5.817440032958984,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18699924647808075,
+            "max_cosine": 0.6334988474845886,
+            "min_cosine": 0.0024087524507194757,
+            "median_cosine": 0.15563389658927917,
+            "grassmann_distance": 6.208438873291016,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.33779802918434143,
+            "max_cosine": 0.8860114812850952,
+            "min_cosine": 0.004635859280824661,
+            "median_cosine": 0.33454233407974243,
+            "grassmann_distance": 8.752069473266602,
+            "overlap_frac_gt_0.5": 0.24,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.28904271125793457,
+            "max_cosine": 0.837607741355896,
+            "min_cosine": 0.007428930606693029,
+            "median_cosine": 0.27250173687934875,
+            "grassmann_distance": 9.091904640197754,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "32000": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.36428385972976685,
+            "max_cosine": 0.8673302531242371,
+            "min_cosine": 0.027565624564886093,
+            "median_cosine": 0.20101438462734222,
+            "grassmann_distance": 2.732780694961548,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1382589042186737,
+            "max_cosine": 0.3811946213245392,
+            "min_cosine": 0.001330485800281167,
+            "median_cosine": 0.1033707931637764,
+            "grassmann_distance": 3.212559700012207,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.24940970540046692,
+            "max_cosine": 0.8831524848937988,
+            "min_cosine": 0.006347717717289925,
+            "median_cosine": 0.12913283705711365,
+            "grassmann_distance": 4.22718620300293,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.18992814421653748,
+            "max_cosine": 0.8546050786972046,
+            "min_cosine": 0.0009891679510474205,
+            "median_cosine": 0.11598147451877594,
+            "grassmann_distance": 4.404236793518066,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.19420702755451202,
+            "max_cosine": 0.8938553929328918,
+            "min_cosine": 0.001634491141885519,
+            "median_cosine": 0.11015599220991135,
+            "grassmann_distance": 6.202643871307373,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18710123002529144,
+            "max_cosine": 0.9115328192710876,
+            "min_cosine": 0.0012385480804368854,
+            "median_cosine": 0.13552092015743256,
+            "grassmann_distance": 6.224699020385742,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.22071699798107147,
+            "max_cosine": 0.9120646119117737,
+            "min_cosine": 0.0013575004413723946,
+            "median_cosine": 0.18370375037193298,
+            "grassmann_distance": 9.591470718383789,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.23393118381500244,
+            "max_cosine": 0.9728631377220154,
+            "min_cosine": 0.0045500751584768295,
+            "median_cosine": 0.20616832375526428,
+            "grassmann_distance": 9.495132446289062,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.39354345202445984,
+            "max_cosine": 0.8104530572891235,
+            "min_cosine": 0.039683204144239426,
+            "median_cosine": 0.3235166668891907,
+            "grassmann_distance": 2.6460366249084473,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.14743995666503906,
+            "max_cosine": 0.3372175991535187,
+            "min_cosine": 0.017231758683919907,
+            "median_cosine": 0.1400776207447052,
+            "grassmann_distance": 3.189089298248291,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.3222218453884125,
+            "max_cosine": 0.8487595319747925,
+            "min_cosine": 0.017940865829586983,
+            "median_cosine": 0.27274924516677856,
+            "grassmann_distance": 3.981793165206909,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.20075178146362305,
+            "max_cosine": 0.7308902144432068,
+            "min_cosine": 0.007803247310221195,
+            "median_cosine": 0.1591896414756775,
+            "grassmann_distance": 4.358245849609375,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2888384461402893,
+            "max_cosine": 0.8676145076751709,
+            "min_cosine": 0.003393560880795121,
+            "median_cosine": 0.2577227056026459,
+            "grassmann_distance": 5.768811225891113,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.24976713955402374,
+            "max_cosine": 0.8622300028800964,
+            "min_cosine": 0.006361537147313356,
+            "median_cosine": 0.20928624272346497,
+            "grassmann_distance": 5.937768459320068,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3779975473880768,
+            "max_cosine": 0.9035695791244507,
+            "min_cosine": 0.0002282880013808608,
+            "median_cosine": 0.3793123662471771,
+            "grassmann_distance": 8.457820892333984,
+            "overlap_frac_gt_0.5": 0.34,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.3536897301673889,
+            "max_cosine": 0.9533469676971436,
+            "min_cosine": 0.006687150336802006,
+            "median_cosine": 0.3563581705093384,
+            "grassmann_distance": 8.636519432067871,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.3010139763355255,
+            "max_cosine": 0.6981049180030823,
+            "min_cosine": 0.018152473494410515,
+            "median_cosine": 0.20445232093334198,
+            "grassmann_distance": 2.868119955062866,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.16029135882854462,
+            "max_cosine": 0.5958695411682129,
+            "min_cosine": 0.01139212865382433,
+            "median_cosine": 0.0734558254480362,
+            "grassmann_distance": 3.179198980331421,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.28563255071640015,
+            "max_cosine": 0.7961539030075073,
+            "min_cosine": 0.014696828089654446,
+            "median_cosine": 0.2425178438425064,
+            "grassmann_distance": 4.092458724975586,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1732267439365387,
+            "max_cosine": 0.7561001777648926,
+            "min_cosine": 0.008652504533529282,
+            "median_cosine": 0.11279214918613434,
+            "grassmann_distance": 4.448490142822266,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.28778958320617676,
+            "max_cosine": 0.8233241438865662,
+            "min_cosine": 0.0024091105442494154,
+            "median_cosine": 0.26036882400512695,
+            "grassmann_distance": 5.767551898956299,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.22192159295082092,
+            "max_cosine": 0.8621358871459961,
+            "min_cosine": 0.014257831498980522,
+            "median_cosine": 0.18986861407756805,
+            "grassmann_distance": 6.058145523071289,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.35720062255859375,
+            "max_cosine": 0.869026780128479,
+            "min_cosine": 0.005383976735174656,
+            "median_cosine": 0.35289615392684937,
+            "grassmann_distance": 8.611945152282715,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.32208943367004395,
+            "max_cosine": 0.9383557438850403,
+            "min_cosine": 0.0006629515555687249,
+            "median_cosine": 0.3125492334365845,
+            "grassmann_distance": 8.86198616027832,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.34827765822410583,
+            "max_cosine": 0.7905972599983215,
+            "min_cosine": 0.0022006493527442217,
+            "median_cosine": 0.26385095715522766,
+            "grassmann_distance": 2.76065731048584,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.18758538365364075,
+            "max_cosine": 0.6422003507614136,
+            "min_cosine": 0.003106367541477084,
+            "median_cosine": 0.06070251762866974,
+            "grassmann_distance": 3.1207001209259033,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.3411342203617096,
+            "max_cosine": 0.8822147846221924,
+            "min_cosine": 0.026491770520806313,
+            "median_cosine": 0.28159236907958984,
+            "grassmann_distance": 3.916358709335327,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.19589562714099884,
+            "max_cosine": 0.8092914819717407,
+            "min_cosine": 0.009660809300839901,
+            "median_cosine": 0.14783737063407898,
+            "grassmann_distance": 4.379087924957275,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.3089596629142761,
+            "max_cosine": 0.8926547169685364,
+            "min_cosine": 0.013045018538832664,
+            "median_cosine": 0.2516951262950897,
+            "grassmann_distance": 5.676397323608398,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.21738865971565247,
+            "max_cosine": 0.8689979910850525,
+            "min_cosine": 0.004535349551588297,
+            "median_cosine": 0.20780432224273682,
+            "grassmann_distance": 6.07959508895874,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3658698797225952,
+            "max_cosine": 0.9184049367904663,
+            "min_cosine": 0.008697804994881153,
+            "median_cosine": 0.36198240518569946,
+            "grassmann_distance": 8.547905921936035,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2966666519641876,
+            "max_cosine": 0.9505044221878052,
+            "min_cosine": 0.005556376185268164,
+            "median_cosine": 0.28598546981811523,
+            "grassmann_distance": 9.043370246887207,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.43449074029922485,
+            "max_cosine": 0.9457302093505859,
+            "min_cosine": 0.032042305916547775,
+            "median_cosine": 0.3396701514720917,
+            "grassmann_distance": 2.564013719558716,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.10225732624530792,
+            "max_cosine": 0.31276148557662964,
+            "min_cosine": 0.013976369984447956,
+            "median_cosine": 0.05905013158917427,
+            "grassmann_distance": 3.2909750938415527,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.448751837015152,
+            "max_cosine": 0.9586859345436096,
+            "min_cosine": 0.05900609493255615,
+            "median_cosine": 0.371624618768692,
+            "grassmann_distance": 3.55843186378479,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.159456267952919,
+            "max_cosine": 0.6070423722267151,
+            "min_cosine": 0.012893319129943848,
+            "median_cosine": 0.12125484645366669,
+            "grassmann_distance": 4.482089519500732,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.39359354972839355,
+            "max_cosine": 0.9647321105003357,
+            "min_cosine": 0.0022687187884002924,
+            "median_cosine": 0.3478575348854065,
+            "grassmann_distance": 5.2952880859375,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.19797702133655548,
+            "max_cosine": 0.7453338503837585,
+            "min_cosine": 0.015502949245274067,
+            "median_cosine": 0.1742211878299713,
+            "grassmann_distance": 6.1623992919921875,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3878266513347626,
+            "max_cosine": 0.9746139049530029,
+            "min_cosine": 0.005129934288561344,
+            "median_cosine": 0.372517466545105,
+            "grassmann_distance": 8.402593612670898,
+            "overlap_frac_gt_0.5": 0.34,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.29452836513519287,
+            "max_cosine": 0.8784198760986328,
+            "min_cosine": 0.011956815607845783,
+            "median_cosine": 0.2780463695526123,
+            "grassmann_distance": 9.054604530334473,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.25116708874702454,
+            "max_cosine": 0.8655102849006653,
+            "min_cosine": 0.01651063747704029,
+            "median_cosine": 0.13474301993846893,
+            "grassmann_distance": 2.9944851398468018,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11602107435464859,
+            "max_cosine": 0.2669990062713623,
+            "min_cosine": 0.0049541122280061245,
+            "median_cosine": 0.08041903376579285,
+            "grassmann_distance": 3.25888991355896,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.19769176840782166,
+            "max_cosine": 0.8716580271720886,
+            "min_cosine": 0.0008438209188170731,
+            "median_cosine": 0.13957759737968445,
+            "grassmann_distance": 4.379462242126465,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.14355993270874023,
+            "max_cosine": 0.625325083732605,
+            "min_cosine": 0.008195804432034492,
+            "median_cosine": 0.1006908118724823,
+            "grassmann_distance": 4.535053730010986,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.20350606739521027,
+            "max_cosine": 0.8848813772201538,
+            "min_cosine": 0.005488797090947628,
+            "median_cosine": 0.173635333776474,
+            "grassmann_distance": 6.145167350769043,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17766976356506348,
+            "max_cosine": 0.7576437592506409,
+            "min_cosine": 0.010497638955712318,
+            "median_cosine": 0.14076051115989685,
+            "grassmann_distance": 6.253861904144287,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2629804313182831,
+            "max_cosine": 0.9059996604919434,
+            "min_cosine": 0.010797037743031979,
+            "median_cosine": 0.2368362545967102,
+            "grassmann_distance": 9.281941413879395,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.25363707542419434,
+            "max_cosine": 0.8662222027778625,
+            "min_cosine": 0.004556394647806883,
+            "median_cosine": 0.2424369603395462,
+            "grassmann_distance": 9.34550666809082,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.2573835551738739,
+            "max_cosine": 0.80955970287323,
+            "min_cosine": 0.013423170894384384,
+            "median_cosine": 0.13119833171367645,
+            "grassmann_distance": 2.976987361907959,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.19711753726005554,
+            "max_cosine": 0.7714810371398926,
+            "min_cosine": 0.005333031062036753,
+            "median_cosine": 0.0696975365281105,
+            "grassmann_distance": 3.112720251083374,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.19769461452960968,
+            "max_cosine": 0.8184149861335754,
+            "min_cosine": 0.004305813927203417,
+            "median_cosine": 0.10541296005249023,
+            "grassmann_distance": 4.379837512969971,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1674290895462036,
+            "max_cosine": 0.8701392412185669,
+            "min_cosine": 0.004006922245025635,
+            "median_cosine": 0.09329653531312943,
+            "grassmann_distance": 4.476447582244873,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.17729046940803528,
+            "max_cosine": 0.8304866552352905,
+            "min_cosine": 0.009449063800275326,
+            "median_cosine": 0.13263961672782898,
+            "grassmann_distance": 6.264082431793213,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17038674652576447,
+            "max_cosine": 0.9116067886352539,
+            "min_cosine": 0.0032171003986150026,
+            "median_cosine": 0.12739793956279755,
+            "grassmann_distance": 6.296744346618652,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2168622761964798,
+            "max_cosine": 0.8610543608665466,
+            "min_cosine": 0.0013009945396333933,
+            "median_cosine": 0.1896982342004776,
+            "grassmann_distance": 9.61016845703125,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.21639421582221985,
+            "max_cosine": 0.9549933671951294,
+            "min_cosine": 0.0026570551563054323,
+            "median_cosine": 0.18950647115707397,
+            "grassmann_distance": 9.612102508544922,
+            "overlap_frac_gt_0.5": 0.02,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.3028797209262848,
+            "max_cosine": 0.8675899505615234,
+            "min_cosine": 0.003275070572271943,
+            "median_cosine": 0.17514586448669434,
+            "grassmann_distance": 2.874006509780884,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11197946965694427,
+            "max_cosine": 0.24301591515541077,
+            "min_cosine": 0.00501115620136261,
+            "median_cosine": 0.08102072775363922,
+            "grassmann_distance": 3.2658281326293945,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.2923966944217682,
+            "max_cosine": 0.8825076818466187,
+            "min_cosine": 0.003926550969481468,
+            "median_cosine": 0.21039652824401855,
+            "grassmann_distance": 4.073509693145752,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.16016368567943573,
+            "max_cosine": 0.5709081888198853,
+            "min_cosine": 0.006071649491786957,
+            "median_cosine": 0.11508576571941376,
+            "grassmann_distance": 4.478484630584717,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2876282036304474,
+            "max_cosine": 0.9010578989982605,
+            "min_cosine": 0.012819228693842888,
+            "median_cosine": 0.24868065118789673,
+            "grassmann_distance": 5.771862983703613,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1977805197238922,
+            "max_cosine": 0.7114832401275635,
+            "min_cosine": 0.0011669732630252838,
+            "median_cosine": 0.17040115594863892,
+            "grassmann_distance": 6.1621222496032715,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.34183719754219055,
+            "max_cosine": 0.9174382090568542,
+            "min_cosine": 0.01841776631772518,
+            "median_cosine": 0.3414783179759979,
+            "grassmann_distance": 8.722661972045898,
+            "overlap_frac_gt_0.5": 0.26,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.28648385405540466,
+            "max_cosine": 0.871720016002655,
+            "min_cosine": 0.005753203760832548,
+            "median_cosine": 0.2596873641014099,
+            "grassmann_distance": 9.118786811828613,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "64000": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.365831583738327,
+            "max_cosine": 0.8705458045005798,
+            "min_cosine": 0.004176204092800617,
+            "median_cosine": 0.18073001503944397,
+            "grassmann_distance": 2.7419538497924805,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.16007734835147858,
+            "max_cosine": 0.5036961436271667,
+            "min_cosine": 0.0019149018917232752,
+            "median_cosine": 0.0842476636171341,
+            "grassmann_distance": 3.1715304851531982,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.2633395195007324,
+            "max_cosine": 0.8871783018112183,
+            "min_cosine": 0.018670709803700447,
+            "median_cosine": 0.15328630805015564,
+            "grassmann_distance": 4.184243679046631,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.16602157056331635,
+            "max_cosine": 0.7329559326171875,
+            "min_cosine": 0.019058452919125557,
+            "median_cosine": 0.1008663922548294,
+            "grassmann_distance": 4.469515323638916,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.20953619480133057,
+            "max_cosine": 0.895271360874176,
+            "min_cosine": 0.005716559011489153,
+            "median_cosine": 0.14692845940589905,
+            "grassmann_distance": 6.135106086730957,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.1847897469997406,
+            "max_cosine": 0.8986373543739319,
+            "min_cosine": 0.002362074563279748,
+            "median_cosine": 0.1332356035709381,
+            "grassmann_distance": 6.232288360595703,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2270483821630478,
+            "max_cosine": 0.9092986583709717,
+            "min_cosine": 0.0018898731796070933,
+            "median_cosine": 0.1934308260679245,
+            "grassmann_distance": 9.545841217041016,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2401312291622162,
+            "max_cosine": 0.9573235511779785,
+            "min_cosine": 0.0012482790043577552,
+            "median_cosine": 0.20440271496772766,
+            "grassmann_distance": 9.4536714553833,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.36847612261772156,
+            "max_cosine": 0.8068203330039978,
+            "min_cosine": 0.10082719475030899,
+            "median_cosine": 0.3290879428386688,
+            "grassmann_distance": 2.700227975845337,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.13979646563529968,
+            "max_cosine": 0.37239646911621094,
+            "min_cosine": 0.029359813779592514,
+            "median_cosine": 0.09178309142589569,
+            "grassmann_distance": 3.207488536834717,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.3126005530357361,
+            "max_cosine": 0.8410093188285828,
+            "min_cosine": 0.05999261513352394,
+            "median_cosine": 0.25637418031692505,
+            "grassmann_distance": 4.0044097900390625,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.17537452280521393,
+            "max_cosine": 0.5886403918266296,
+            "min_cosine": 0.010859226807951927,
+            "median_cosine": 0.1544570028781891,
+            "grassmann_distance": 4.429723739624023,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2870329022407532,
+            "max_cosine": 0.8529234528541565,
+            "min_cosine": 0.006846036296337843,
+            "median_cosine": 0.24867145717144012,
+            "grassmann_distance": 5.769764423370361,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.24403922259807587,
+            "max_cosine": 0.8014402985572815,
+            "min_cosine": 0.0012828120961785316,
+            "median_cosine": 0.21071547269821167,
+            "grassmann_distance": 5.961119651794434,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.36665982007980347,
+            "max_cosine": 0.8960086107254028,
+            "min_cosine": 0.005948119796812534,
+            "median_cosine": 0.36859434843063354,
+            "grassmann_distance": 8.543869972229004,
+            "overlap_frac_gt_0.5": 0.32,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.3641880750656128,
+            "max_cosine": 0.9258086085319519,
+            "min_cosine": 0.0001991760655073449,
+            "median_cosine": 0.3568170666694641,
+            "grassmann_distance": 8.555938720703125,
+            "overlap_frac_gt_0.5": 0.32,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.34466248750686646,
+            "max_cosine": 0.7544952630996704,
+            "min_cosine": 0.128814697265625,
+            "median_cosine": 0.20211054384708405,
+            "grassmann_distance": 2.7550408840179443,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.16869041323661804,
+            "max_cosine": 0.46815598011016846,
+            "min_cosine": 0.005976548884063959,
+            "median_cosine": 0.10430201143026352,
+            "grassmann_distance": 3.149806261062622,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.29041773080825806,
+            "max_cosine": 0.79757159948349,
+            "min_cosine": 0.004210311453789473,
+            "median_cosine": 0.24213171005249023,
+            "grassmann_distance": 4.075954914093018,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.2021651715040207,
+            "max_cosine": 0.6731905341148376,
+            "min_cosine": 0.007758002262562513,
+            "median_cosine": 0.17316710948944092,
+            "grassmann_distance": 4.349641799926758,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2916247546672821,
+            "max_cosine": 0.8341880440711975,
+            "min_cosine": 0.02106073871254921,
+            "median_cosine": 0.2565966248512268,
+            "grassmann_distance": 5.749396800994873,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.23410308361053467,
+            "max_cosine": 0.8339322805404663,
+            "min_cosine": 0.012281293980777264,
+            "median_cosine": 0.2039702832698822,
+            "grassmann_distance": 6.003828048706055,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3543383777141571,
+            "max_cosine": 0.8838856220245361,
+            "min_cosine": 0.014350282959640026,
+            "median_cosine": 0.3385829031467438,
+            "grassmann_distance": 8.631753921508789,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.3418836295604706,
+            "max_cosine": 0.9355899691581726,
+            "min_cosine": 0.0225205235183239,
+            "median_cosine": 0.3351738452911377,
+            "grassmann_distance": 8.71657943725586,
+            "overlap_frac_gt_0.5": 0.24,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.3512306809425354,
+            "max_cosine": 0.8342112302780151,
+            "min_cosine": 0.01037389412522316,
+            "median_cosine": 0.3476421535015106,
+            "grassmann_distance": 2.7578158378601074,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.15692666172981262,
+            "max_cosine": 0.5361058115959167,
+            "min_cosine": 0.02283453196287155,
+            "median_cosine": 0.07243085652589798,
+            "grassmann_distance": 3.180555820465088,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.35172325372695923,
+            "max_cosine": 0.8745060563087463,
+            "min_cosine": 0.005182697903364897,
+            "median_cosine": 0.30199164152145386,
+            "grassmann_distance": 3.874159574508667,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.16873440146446228,
+            "max_cosine": 0.769925057888031,
+            "min_cosine": 0.00593281676992774,
+            "median_cosine": 0.12767884135246277,
+            "grassmann_distance": 4.464334964752197,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.31813934445381165,
+            "max_cosine": 0.8860978484153748,
+            "min_cosine": 0.015272215008735657,
+            "median_cosine": 0.31154942512512207,
+            "grassmann_distance": 5.6334357261657715,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.22036290168762207,
+            "max_cosine": 0.8558381795883179,
+            "min_cosine": 0.0023676662240177393,
+            "median_cosine": 0.19669657945632935,
+            "grassmann_distance": 6.068961143493652,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.36171597242355347,
+            "max_cosine": 0.9171390533447266,
+            "min_cosine": 0.009721514768898487,
+            "median_cosine": 0.3425944149494171,
+            "grassmann_distance": 8.576468467712402,
+            "overlap_frac_gt_0.5": 0.28,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2951962947845459,
+            "max_cosine": 0.9414414763450623,
+            "min_cosine": 0.004307374823838472,
+            "median_cosine": 0.28210729360580444,
+            "grassmann_distance": 9.054086685180664,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.4371413290500641,
+            "max_cosine": 0.9427087903022766,
+            "min_cosine": 0.06634949147701263,
+            "median_cosine": 0.3424972891807556,
+            "grassmann_distance": 2.5527396202087402,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1306973397731781,
+            "max_cosine": 0.2921960949897766,
+            "min_cosine": 0.028982805088162422,
+            "median_cosine": 0.11050692945718765,
+            "grassmann_distance": 3.2243053913116455,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.38829678297042847,
+            "max_cosine": 0.9552944898605347,
+            "min_cosine": 0.022021668031811714,
+            "median_cosine": 0.2971036434173584,
+            "grassmann_distance": 3.7636735439300537,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.16283144056797028,
+            "max_cosine": 0.49972572922706604,
+            "min_cosine": 0.012455843389034271,
+            "median_cosine": 0.14022767543792725,
+            "grassmann_distance": 4.464988708496094,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.37016764283180237,
+            "max_cosine": 0.9596686363220215,
+            "min_cosine": 0.0041998825035989285,
+            "median_cosine": 0.33923596143722534,
+            "grassmann_distance": 5.399167537689209,
+            "overlap_frac_gt_0.5": 0.25,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.19523833692073822,
+            "max_cosine": 0.6393574476242065,
+            "min_cosine": 0.0006367713795043528,
+            "median_cosine": 0.1742849051952362,
+            "grassmann_distance": 6.171013832092285,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.38795918226242065,
+            "max_cosine": 0.9683776497840881,
+            "min_cosine": 0.0034641933161765337,
+            "median_cosine": 0.363075852394104,
+            "grassmann_distance": 8.396500587463379,
+            "overlap_frac_gt_0.5": 0.36,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2982903718948364,
+            "max_cosine": 0.8684000372886658,
+            "min_cosine": 0.004294168204069138,
+            "median_cosine": 0.2784901261329651,
+            "grassmann_distance": 9.033875465393066,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.24078600108623505,
+            "max_cosine": 0.8739035725593567,
+            "min_cosine": 0.030011162161827087,
+            "median_cosine": 0.07840333878993988,
+            "grassmann_distance": 3.0204854011535645,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11292050033807755,
+            "max_cosine": 0.3430095314979553,
+            "min_cosine": 0.021854057908058167,
+            "median_cosine": 0.057934410870075226,
+            "grassmann_distance": 3.2676756381988525,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.18799766898155212,
+            "max_cosine": 0.881799578666687,
+            "min_cosine": 0.003554341848939657,
+            "median_cosine": 0.10425862669944763,
+            "grassmann_distance": 4.410575866699219,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1367572396993637,
+            "max_cosine": 0.5568108558654785,
+            "min_cosine": 0.005302409641444683,
+            "median_cosine": 0.10439211130142212,
+            "grassmann_distance": 4.550532341003418,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.18329298496246338,
+            "max_cosine": 0.8877240419387817,
+            "min_cosine": 0.017527347430586815,
+            "median_cosine": 0.13945043087005615,
+            "grassmann_distance": 6.237406253814697,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.165504589676857,
+            "max_cosine": 0.6798157691955566,
+            "min_cosine": 0.003408819204196334,
+            "median_cosine": 0.12663492560386658,
+            "grassmann_distance": 6.305347442626953,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.25323382019996643,
+            "max_cosine": 0.9094774723052979,
+            "min_cosine": 0.004063471220433712,
+            "median_cosine": 0.2399349808692932,
+            "grassmann_distance": 9.351862907409668,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.24971017241477966,
+            "max_cosine": 0.8540610671043396,
+            "min_cosine": 0.005008482374250889,
+            "median_cosine": 0.23252035677433014,
+            "grassmann_distance": 9.374161720275879,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.2474067509174347,
+            "max_cosine": 0.847476065158844,
+            "min_cosine": 0.039386097341775894,
+            "median_cosine": 0.10059884935617447,
+            "grassmann_distance": 3.0016603469848633,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.18257376551628113,
+            "max_cosine": 0.677485466003418,
+            "min_cosine": 0.0004367303045000881,
+            "median_cosine": 0.07732341438531876,
+            "grassmann_distance": 3.135540246963501,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.20975904166698456,
+            "max_cosine": 0.8543456196784973,
+            "min_cosine": 0.0017319773323833942,
+            "median_cosine": 0.10766251385211945,
+            "grassmann_distance": 4.3445281982421875,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.15992245078086853,
+            "max_cosine": 0.8270314335823059,
+            "min_cosine": 0.003426797455176711,
+            "median_cosine": 0.08428995311260223,
+            "grassmann_distance": 4.49849271774292,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.1811571568250656,
+            "max_cosine": 0.8606491088867188,
+            "min_cosine": 0.0077147833071649075,
+            "median_cosine": 0.12997488677501678,
+            "grassmann_distance": 6.249339580535889,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16323097050189972,
+            "max_cosine": 0.9022002220153809,
+            "min_cosine": 0.0018352312035858631,
+            "median_cosine": 0.11845643818378448,
+            "grassmann_distance": 6.327934741973877,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.22006234526634216,
+            "max_cosine": 0.8877251744270325,
+            "min_cosine": 0.002033327706158161,
+            "median_cosine": 0.19130447506904602,
+            "grassmann_distance": 9.588050842285156,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.2123521864414215,
+            "max_cosine": 0.951564371585846,
+            "min_cosine": 0.001599606010131538,
+            "median_cosine": 0.18420447409152985,
+            "grassmann_distance": 9.644250869750977,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.3066672086715698,
+            "max_cosine": 0.8793526887893677,
+            "min_cosine": 0.1036495789885521,
+            "median_cosine": 0.14041019976139069,
+            "grassmann_distance": 2.8597071170806885,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11970293521881104,
+            "max_cosine": 0.22693613171577454,
+            "min_cosine": 0.020827095955610275,
+            "median_cosine": 0.12501725554466248,
+            "grassmann_distance": 3.2479183673858643,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.2910838723182678,
+            "max_cosine": 0.8996546268463135,
+            "min_cosine": 0.06826633214950562,
+            "median_cosine": 0.21528251469135284,
+            "grassmann_distance": 4.071897983551025,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.15456104278564453,
+            "max_cosine": 0.5102109909057617,
+            "min_cosine": 0.0028774405363947153,
+            "median_cosine": 0.12172961235046387,
+            "grassmann_distance": 4.493067741394043,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.2745416760444641,
+            "max_cosine": 0.9116493463516235,
+            "min_cosine": 0.005638673901557922,
+            "median_cosine": 0.23738205432891846,
+            "grassmann_distance": 5.830478191375732,
+            "overlap_frac_gt_0.5": 0.15,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18993766605854034,
+            "max_cosine": 0.6454500555992126,
+            "min_cosine": 0.009317404590547085,
+            "median_cosine": 0.16244471073150635,
+            "grassmann_distance": 6.1970906257629395,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3402750790119171,
+            "max_cosine": 0.9310025572776794,
+            "min_cosine": 0.002499954542145133,
+            "median_cosine": 0.3221495747566223,
+            "grassmann_distance": 8.731867790222168,
+            "overlap_frac_gt_0.5": 0.26,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.28430163860321045,
+            "max_cosine": 0.8588809370994568,
+            "min_cosine": 0.0014808172127231956,
+            "median_cosine": 0.2665160894393921,
+            "grassmann_distance": 9.132416725158691,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      }
+    },
+    "143000": {
+      "adjacent_pairs": {
+        "0_1": {
+          "top5": {
+            "mean_cosine": 0.36676111817359924,
+            "max_cosine": 0.8165848255157471,
+            "min_cosine": 0.01855807565152645,
+            "median_cosine": 0.18372023105621338,
+            "grassmann_distance": 2.73311448097229,
+            "overlap_frac_gt_0.5": 0.4,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.16456612944602966,
+            "max_cosine": 0.5580831170082092,
+            "min_cosine": 0.023872315883636475,
+            "median_cosine": 0.09277661889791489,
+            "grassmann_distance": 3.1648571491241455,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.2701278328895569,
+            "max_cosine": 0.8662118911743164,
+            "min_cosine": 0.0027162707410752773,
+            "median_cosine": 0.18214505910873413,
+            "grassmann_distance": 4.163288593292236,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.15695521235466003,
+            "max_cosine": 0.7257192730903625,
+            "min_cosine": 0.011296846903860569,
+            "median_cosine": 0.1046106368303299,
+            "grassmann_distance": 4.497873306274414,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.22622498869895935,
+            "max_cosine": 0.8884808421134949,
+            "min_cosine": 0.0075172134675085545,
+            "median_cosine": 0.15677770972251892,
+            "grassmann_distance": 6.057404041290283,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17192719876766205,
+            "max_cosine": 0.8403291702270508,
+            "min_cosine": 0.016659343615174294,
+            "median_cosine": 0.13625065982341766,
+            "grassmann_distance": 6.283218860626221,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.24540120363235474,
+            "max_cosine": 0.9094762206077576,
+            "min_cosine": 0.0020658208522945642,
+            "median_cosine": 0.2133587896823883,
+            "grassmann_distance": 9.417457580566406,
+            "overlap_frac_gt_0.5": 0.08,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.23523160815238953,
+            "max_cosine": 0.9325578808784485,
+            "min_cosine": 0.0033975322730839252,
+            "median_cosine": 0.20139703154563904,
+            "grassmann_distance": 9.48292350769043,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          }
+        },
+        "1_2": {
+          "top5": {
+            "mean_cosine": 0.3671479821205139,
+            "max_cosine": 0.7896767258644104,
+            "min_cosine": 0.09371975809335709,
+            "median_cosine": 0.28538304567337036,
+            "grassmann_distance": 2.703477144241333,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.13881582021713257,
+            "max_cosine": 0.3952641785144806,
+            "min_cosine": 0.006866529118269682,
+            "median_cosine": 0.08809268474578857,
+            "grassmann_distance": 3.2126665115356445,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.31217634677886963,
+            "max_cosine": 0.8372326493263245,
+            "min_cosine": 0.012756848707795143,
+            "median_cosine": 0.2652164101600647,
+            "grassmann_distance": 4.006564617156982,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1955641359090805,
+            "max_cosine": 0.6238255500793457,
+            "min_cosine": 0.01791463792324066,
+            "median_cosine": 0.16553202271461487,
+            "grassmann_distance": 4.367828845977783,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.30025815963745117,
+            "max_cosine": 0.8609573245048523,
+            "min_cosine": 0.016478145495057106,
+            "median_cosine": 0.2597239017486572,
+            "grassmann_distance": 5.7119221687316895,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.25234079360961914,
+            "max_cosine": 0.8106920123100281,
+            "min_cosine": 0.022189093753695488,
+            "median_cosine": 0.2437574863433838,
+            "grassmann_distance": 5.924574375152588,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.37187546491622925,
+            "max_cosine": 0.8928515911102295,
+            "min_cosine": 0.006839234381914139,
+            "median_cosine": 0.3750813603401184,
+            "grassmann_distance": 8.502676010131836,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.39671793580055237,
+            "max_cosine": 0.9256640076637268,
+            "min_cosine": 0.018787765875458717,
+            "median_cosine": 0.39798974990844727,
+            "grassmann_distance": 8.315938949584961,
+            "overlap_frac_gt_0.5": 0.36,
+            "n_angles": 50
+          }
+        },
+        "2_3": {
+          "top5": {
+            "mean_cosine": 0.24534301459789276,
+            "max_cosine": 0.6949490904808044,
+            "min_cosine": 0.018045540899038315,
+            "median_cosine": 0.1313464343547821,
+            "grassmann_distance": 2.990124464035034,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.15944036841392517,
+            "max_cosine": 0.4757506847381592,
+            "min_cosine": 0.00031891660182736814,
+            "median_cosine": 0.1165306493639946,
+            "grassmann_distance": 3.17122483253479,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.29062920808792114,
+            "max_cosine": 0.8000084757804871,
+            "min_cosine": 0.026050668209791183,
+            "median_cosine": 0.2287101298570633,
+            "grassmann_distance": 4.07200813293457,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.20127859711647034,
+            "max_cosine": 0.6659559607505798,
+            "min_cosine": 0.030500885099172592,
+            "median_cosine": 0.158358633518219,
+            "grassmann_distance": 4.34959077835083,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.30934959650039673,
+            "max_cosine": 0.8332491517066956,
+            "min_cosine": 0.013594569638371468,
+            "median_cosine": 0.2908477485179901,
+            "grassmann_distance": 5.667617321014404,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.23701763153076172,
+            "max_cosine": 0.821747899055481,
+            "min_cosine": 0.00037758800317533314,
+            "median_cosine": 0.21361595392227173,
+            "grassmann_distance": 5.991008758544922,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3656282126903534,
+            "max_cosine": 0.8969487547874451,
+            "min_cosine": 0.002304487396031618,
+            "median_cosine": 0.3525175452232361,
+            "grassmann_distance": 8.552286148071289,
+            "overlap_frac_gt_0.5": 0.32,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.33310630917549133,
+            "max_cosine": 0.9182251691818237,
+            "min_cosine": 0.004415109753608704,
+            "median_cosine": 0.3183450698852539,
+            "grassmann_distance": 8.785324096679688,
+            "overlap_frac_gt_0.5": 0.26,
+            "n_angles": 50
+          }
+        },
+        "3_4": {
+          "top5": {
+            "mean_cosine": 0.31460967659950256,
+            "max_cosine": 0.7876679301261902,
+            "min_cosine": 0.03955232724547386,
+            "median_cosine": 0.2186528891324997,
+            "grassmann_distance": 2.8324153423309326,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1253010779619217,
+            "max_cosine": 0.3455362915992737,
+            "min_cosine": 0.006969710811972618,
+            "median_cosine": 0.07704414427280426,
+            "grassmann_distance": 3.2403440475463867,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.38342514634132385,
+            "max_cosine": 0.8607802987098694,
+            "min_cosine": 0.03914615511894226,
+            "median_cosine": 0.36895620822906494,
+            "grassmann_distance": 3.7738265991210938,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.14984142780303955,
+            "max_cosine": 0.5538581013679504,
+            "min_cosine": 0.006013922393321991,
+            "median_cosine": 0.10784374177455902,
+            "grassmann_distance": 4.5107831954956055,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.36732396483421326,
+            "max_cosine": 0.8959680795669556,
+            "min_cosine": 0.0115556251257658,
+            "median_cosine": 0.3267099857330322,
+            "grassmann_distance": 5.41165828704834,
+            "overlap_frac_gt_0.5": 0.35,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.18698382377624512,
+            "max_cosine": 0.6978603005409241,
+            "min_cosine": 0.002447007456794381,
+            "median_cosine": 0.15491361916065216,
+            "grassmann_distance": 6.212345600128174,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.38742709159851074,
+            "max_cosine": 0.9252976775169373,
+            "min_cosine": 0.00982682965695858,
+            "median_cosine": 0.36565735936164856,
+            "grassmann_distance": 8.39509105682373,
+            "overlap_frac_gt_0.5": 0.32,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.293960303068161,
+            "max_cosine": 0.827041745185852,
+            "min_cosine": 0.007316236384212971,
+            "median_cosine": 0.2762545347213745,
+            "grassmann_distance": 9.05924129486084,
+            "overlap_frac_gt_0.5": 0.16,
+            "n_angles": 50
+          }
+        },
+        "4_5": {
+          "top5": {
+            "mean_cosine": 0.39013510942459106,
+            "max_cosine": 0.9106529951095581,
+            "min_cosine": 0.08348897844552994,
+            "median_cosine": 0.2670338451862335,
+            "grassmann_distance": 2.661862373352051,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.13610626757144928,
+            "max_cosine": 0.32673242688179016,
+            "min_cosine": 0.029731662943959236,
+            "median_cosine": 0.1042080670595169,
+            "grassmann_distance": 3.2142248153686523,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.35537421703338623,
+            "max_cosine": 0.9230243563652039,
+            "min_cosine": 0.038063280284404755,
+            "median_cosine": 0.3064660131931305,
+            "grassmann_distance": 3.8645131587982178,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.17836689949035645,
+            "max_cosine": 0.3788624405860901,
+            "min_cosine": 0.006581067573279142,
+            "median_cosine": 0.17378121614456177,
+            "grassmann_distance": 4.4116973876953125,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.3433071970939636,
+            "max_cosine": 0.9348706007003784,
+            "min_cosine": 0.007231864612549543,
+            "median_cosine": 0.31743496656417847,
+            "grassmann_distance": 5.5213165283203125,
+            "overlap_frac_gt_0.5": 0.25,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.20655293762683868,
+            "max_cosine": 0.5391981601715088,
+            "min_cosine": 0.00484571373090148,
+            "median_cosine": 0.1963534653186798,
+            "grassmann_distance": 6.117337703704834,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.372081458568573,
+            "max_cosine": 0.9500638246536255,
+            "min_cosine": 0.0023725142236799,
+            "median_cosine": 0.35922709107398987,
+            "grassmann_distance": 8.508832931518555,
+            "overlap_frac_gt_0.5": 0.3,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.3063455820083618,
+            "max_cosine": 0.8080126643180847,
+            "min_cosine": 0.0014304335927590728,
+            "median_cosine": 0.2925114035606384,
+            "grassmann_distance": 8.973979949951172,
+            "overlap_frac_gt_0.5": 0.18,
+            "n_angles": 50
+          }
+        }
+      },
+      "non_adjacent": {
+        "first_last": {
+          "top5": {
+            "mean_cosine": 0.24635127186775208,
+            "max_cosine": 0.8176459670066833,
+            "min_cosine": 0.02005503885447979,
+            "median_cosine": 0.1477535367012024,
+            "grassmann_distance": 3.0010228157043457,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1463059037923813,
+            "max_cosine": 0.36964425444602966,
+            "min_cosine": 0.020391754806041718,
+            "median_cosine": 0.08099661767482758,
+            "grassmann_distance": 3.1944973468780518,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.19890940189361572,
+            "max_cosine": 0.847099781036377,
+            "min_cosine": 0.0034629886504262686,
+            "median_cosine": 0.12296992540359497,
+            "grassmann_distance": 4.37437629699707,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.16819925606250763,
+            "max_cosine": 0.5300294160842896,
+            "min_cosine": 0.017830438911914825,
+            "median_cosine": 0.13466215133666992,
+            "grassmann_distance": 4.448047637939453,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.19784340262413025,
+            "max_cosine": 0.8654019236564636,
+            "min_cosine": 0.0026105153374373913,
+            "median_cosine": 0.1688212901353836,
+            "grassmann_distance": 6.170997619628906,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.17974789440631866,
+            "max_cosine": 0.6687896847724915,
+            "min_cosine": 0.003147193230688572,
+            "median_cosine": 0.15072903037071228,
+            "grassmann_distance": 6.241189956665039,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.2587311863899231,
+            "max_cosine": 0.8890796899795532,
+            "min_cosine": 2.4940158255049028e-05,
+            "median_cosine": 0.238922119140625,
+            "grassmann_distance": 9.3132963180542,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.25771233439445496,
+            "max_cosine": 0.90010005235672,
+            "min_cosine": 0.008510774001479149,
+            "median_cosine": 0.24290704727172852,
+            "grassmann_distance": 9.317411422729492,
+            "overlap_frac_gt_0.5": 0.06,
+            "n_angles": 50
+          }
+        },
+        "first_mid": {
+          "top5": {
+            "mean_cosine": 0.2000141143798828,
+            "max_cosine": 0.7630583047866821,
+            "min_cosine": 0.007531396578997374,
+            "median_cosine": 0.06123511865735054,
+            "grassmann_distance": 3.104996919631958,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.1782335638999939,
+            "max_cosine": 0.6794158816337585,
+            "min_cosine": 0.006563056726008654,
+            "median_cosine": 0.05190408602356911,
+            "grassmann_distance": 3.146221876144409,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.19832949340343475,
+            "max_cosine": 0.8641067147254944,
+            "min_cosine": 0.0021344968117773533,
+            "median_cosine": 0.12540560960769653,
+            "grassmann_distance": 4.3767571449279785,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.15405286848545074,
+            "max_cosine": 0.785679042339325,
+            "min_cosine": 0.006592923775315285,
+            "median_cosine": 0.08925094455480576,
+            "grassmann_distance": 4.512784481048584,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.19362016022205353,
+            "max_cosine": 0.8709405064582825,
+            "min_cosine": 0.0028261346742510796,
+            "median_cosine": 0.14939044415950775,
+            "grassmann_distance": 6.190978050231934,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.16102658212184906,
+            "max_cosine": 0.8726101517677307,
+            "min_cosine": 0.0006505688652396202,
+            "median_cosine": 0.12477516382932663,
+            "grassmann_distance": 6.335733890533447,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.23910905420780182,
+            "max_cosine": 0.89327073097229,
+            "min_cosine": 0.0009601936326362193,
+            "median_cosine": 0.21741776168346405,
+            "grassmann_distance": 9.45363998413086,
+            "overlap_frac_gt_0.5": 0.04,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.21722431480884552,
+            "max_cosine": 0.9191300868988037,
+            "min_cosine": 0.0034838931169360876,
+            "median_cosine": 0.20113587379455566,
+            "grassmann_distance": 9.605525016784668,
+            "overlap_frac_gt_0.5": 0.02,
+            "n_angles": 50
+          }
+        },
+        "mid_last": {
+          "top5": {
+            "mean_cosine": 0.2008177936077118,
+            "max_cosine": 0.7306094765663147,
+            "min_cosine": 0.007353885564953089,
+            "median_cosine": 0.07372132688760757,
+            "grassmann_distance": 3.0984575748443604,
+            "overlap_frac_gt_0.5": 0.2,
+            "n_angles": 5
+          },
+          "bot5": {
+            "mean_cosine": 0.11814709007740021,
+            "max_cosine": 0.28232988715171814,
+            "min_cosine": 0.001133092911913991,
+            "median_cosine": 0.09795188158750534,
+            "grassmann_distance": 3.2531864643096924,
+            "overlap_frac_gt_0.5": 0.0,
+            "n_angles": 5
+          },
+          "top10": {
+            "mean_cosine": 0.24008503556251526,
+            "max_cosine": 0.8447680473327637,
+            "min_cosine": 0.006953675299882889,
+            "median_cosine": 0.18404273688793182,
+            "grassmann_distance": 4.242443084716797,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "bot10": {
+            "mean_cosine": 0.1662987768650055,
+            "max_cosine": 0.5147786140441895,
+            "min_cosine": 0.030214449390769005,
+            "median_cosine": 0.13545137643814087,
+            "grassmann_distance": 4.454412460327148,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 10
+          },
+          "top20": {
+            "mean_cosine": 0.27296334505081177,
+            "max_cosine": 0.8717044591903687,
+            "min_cosine": 0.0066167982295155525,
+            "median_cosine": 0.2424694150686264,
+            "grassmann_distance": 5.835433006286621,
+            "overlap_frac_gt_0.5": 0.1,
+            "n_angles": 20
+          },
+          "bot20": {
+            "mean_cosine": 0.20060324668884277,
+            "max_cosine": 0.6634658575057983,
+            "min_cosine": 0.0056024640798568726,
+            "median_cosine": 0.17423191666603088,
+            "grassmann_distance": 6.147427558898926,
+            "overlap_frac_gt_0.5": 0.05,
+            "n_angles": 20
+          },
+          "top50": {
+            "mean_cosine": 0.3458217680454254,
+            "max_cosine": 0.9051895141601562,
+            "min_cosine": 0.002368849702179432,
+            "median_cosine": 0.3304348587989807,
+            "grassmann_distance": 8.692768096923828,
+            "overlap_frac_gt_0.5": 0.26,
+            "n_angles": 50
+          },
+          "bot50": {
+            "mean_cosine": 0.29133301973342896,
+            "max_cosine": 0.9085146188735962,
+            "min_cosine": 0.007968535646796227,
+            "median_cosine": 0.27309340238571167,
+            "grassmann_distance": 9.08177661895752,
+            "overlap_frac_gt_0.5": 0.14,
+            "n_angles": 50
+          }
+        }
+      }
+    }
+  }
+}

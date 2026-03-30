@@ -1,0 +1,19 @@
+# Generated figures
+*.png
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.egg-info/
+
+# Model cache
+huggingface_cache/
