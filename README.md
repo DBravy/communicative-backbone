@@ -10,7 +10,7 @@ This repository contains experiments that track the emergence of geometric struc
 
 | Model Family | Sizes | Activation | Source |
 |---|---|---|---|
-| **Pythia** | 70M, 160M, 410M, 1B, 1.4B | GELU | EleutherAI |
+| **Pythia** | 410M, 1B, 1.4B | GELU | EleutherAI |
 | **OLMo** | 1B | SwiGLU | AI2 |
 | **BLOOM** | 1.1B | GELU (sequential) | BigScience |
 | **TinyLlama** | 1.1B | SwiGLU | Zhang et al. |
