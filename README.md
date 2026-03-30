@@ -2,7 +2,7 @@
 
 Code and data for reproducing the experiments in:
 
-> Delbert Bray Jr. "Communication Before Computation: The Development of Communicative Structure in Transformer Learning." [arXiv link TBD]
+> Delbert Bray Jr. "Communication Before Computation: The Development of Communicative Structure in Transformer Learning."
 
 ## Overview
 
