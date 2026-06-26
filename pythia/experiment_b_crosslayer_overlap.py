@@ -193,7 +193,11 @@ def get_layer_svd(model, layer_idx: int) -> tuple:
 
 
 def load_model_at_checkpoint(model_name: str, step: int):
-    """Load a Pythia model at a specific training checkpoint."""
+    """Load a Pythia model at a specific training checkpoint.
+
+    Returns (model, repo_id, revision) so the caller can free exactly the
+    checkpoint that was downloaded once its data has been gathered.
+    """
     from transformers import AutoModelForCausalLM
 
     revision = f"step{step}"
@@ -206,14 +210,52 @@ def load_model_at_checkpoint(model_name: str, step: int):
         cache_dir=CACHE_DIR,
     )
     model.eval()
-    return model
+    return model, model_name, revision
+
+
+def _ref_matches(rev, revision: str) -> bool:
+    """True if a cached revision corresponds to the loaded ref or commit."""
+    if revision == rev.commit_hash:
+        return True
+    return any(r == revision or r.endswith("/" + revision) for r in rev.refs)
+
+
+def free_checkpoint(repo_id: str, revision: str, cache_dir=None):
+    """Delete a single downloaded checkpoint (model revision) from the HF cache.
+
+    Frees disk once a checkpoint's data has been gathered. Best-effort and safe:
+    it matches the exact repo_id and the ref/commit that was loaded, deletes only
+    those, and never raises into the sweep (a failure prints a warning and the run
+    continues). A miss is a no-op.
+    """
+    try:
+        from huggingface_hub import scan_cache_dir
+        info = scan_cache_dir(cache_dir=cache_dir)
+    except Exception as e:
+        print(f"  [cache] skip free for {repo_id}@{revision}: cannot scan cache ({e})")
+        return
+    commit_hashes = [
+        rev.commit_hash
+        for repo in info.repos if repo.repo_id == repo_id
+        for rev in repo.revisions if _ref_matches(rev, revision)
+    ]
+    if not commit_hashes:
+        print(f"  [cache] nothing to free for {repo_id}@{revision} (not in cache)")
+        return
+    try:
+        strategy = info.delete_revisions(*commit_hashes)
+        freed = strategy.expected_freed_size_str
+        strategy.execute()
+        print(f"  [cache] freed {freed}: deleted {repo_id}@{revision}")
+    except Exception as e:
+        print(f"  [cache] could not delete {repo_id}@{revision}: {e}")
 
 
 # ---------------------------------------------------------------------------
 # Main experiment
 # ---------------------------------------------------------------------------
 
-def run_experiment(model_key: str, output_dir: str):
+def run_experiment(model_key: str, output_dir: str, free_checkpoints: bool = True):
     cfg = MODEL_CONFIGS[model_key]
     model_name = cfg["name"]
     n_layers = cfg["n_layers"]
@@ -243,7 +285,7 @@ def run_experiment(model_key: str, output_dir: str):
         print(f"  {model_key} -- step {step}")
         print(f"{'='*60}")
 
-        model = load_model_at_checkpoint(model_name, step)
+        model, repo, revision = load_model_at_checkpoint(model_name, step)
 
         # Extract SVDs for all layers
         layer_svds = []
@@ -317,6 +359,8 @@ def run_experiment(model_key: str, output_dir: str):
         del model, layer_svds
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if free_checkpoints:
+            free_checkpoint(repo, revision, CACHE_DIR)
 
     # Save
     os.makedirs(output_dir, exist_ok=True)
@@ -527,10 +571,15 @@ if __name__ == "__main__":
     parser.add_argument("--models", nargs="+", default=["70m", "410m"],
                         choices=list(MODEL_CONFIGS.keys()))
     parser.add_argument("--output_dir", default="results/experiment_b")
+    parser.add_argument("--keep_checkpoints", action="store_true",
+                        help="Keep downloaded checkpoints in the HF cache. Default: "
+                             "delete each checkpoint from the cache once its data has "
+                             "been gathered, to save disk during long sweeps.")
     args = parser.parse_args()
 
     for model_key in args.models:
-        results = run_experiment(model_key, args.output_dir)
+        results = run_experiment(model_key, args.output_dir,
+                                 free_checkpoints=not args.keep_checkpoints)
         plot_results(results, args.output_dir)
         plot_relations(results, args.output_dir)
 
