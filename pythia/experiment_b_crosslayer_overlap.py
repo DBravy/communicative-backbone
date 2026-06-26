@@ -26,6 +26,20 @@ Checkpoints: 0, 128, 512, 2000, 8000, 32000, 64000, 143000
 
 Usage:
     python experiment_b_crosslayer_overlap.py [--models 70m 410m] [--device cuda]
+
+PATCH (read/write side):
+  The original recorded only top{k}/bot{k}: the mean top-/bottom-k overlap of the
+  LEFT singular vectors (U) between layers. This patch keeps those keys unchanged
+  and adds, per pair, the full set of four block relations under top{k}_rel and
+  bot{k}_rel:
+      UiUj : left(early)  vs left(late)    (== legacy top/bot, "write vs write")
+      ViVj : right(early) vs right(late)   ("read vs read")
+      UiVj : left(early)  vs right(late)   ("earlier writes -> later reads")
+      ViUj : right(early) vs left(late)    ("later writes -> earlier reads")
+  Keys are named by singular-vector block, not by interpretation. The write/read
+  reading was verified numerically (composed @ V[:,i] = S[i]*U[:,i], so V is the
+  input/read side and U the output/write side). If that convention is ever found
+  to be transposed, the labels swap but every recorded number stands.
 """
 
 import argparse
@@ -36,7 +50,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-CACHE_DIR = os.environ.get("HF_HOME", None)
+_ORICO_CACHE = "/Volumes/ORICO/huggingface_cache"
+CACHE_DIR = _ORICO_CACHE if os.path.isdir("/Volumes/ORICO") else None
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -101,6 +116,43 @@ def subspace_overlap(U1: np.ndarray, U2: np.ndarray) -> dict:
         "grassmann_distance": float(np.sqrt(np.sum(angles ** 2))),
         "overlap_frac_gt_0.5": float(np.mean(cosines > 0.5)),
         "n_angles": len(cosines),
+    }
+
+
+def _band_slice(M: np.ndarray, k: int, band: str) -> np.ndarray:
+    """Leading (top) or trailing (bot) k columns of an SVD factor."""
+    if band == "top":
+        return M[:, :k]
+    if band == "bot":
+        return M[:, -k:]
+    raise ValueError(f"unknown band: {band!r}")
+
+
+def relations_for_pair(svd_early: dict, svd_late: dict, k: int, band: str) -> dict:
+    """All four cross-layer subspace relations between an earlier and a later layer.
+
+    Each key names the exact singular-vector blocks compared; the first letter is
+    the earlier layer, the second the later layer:
+        UiUj : left(early)  vs left(late)
+        ViVj : right(early) vs right(late)
+        UiVj : left(early)  vs right(late)
+        ViUj : right(early) vs left(late)
+
+    Under the column-vector convention (out = composed @ r, composed = U S V^T,
+    verified numerically), U are output/write directions and V input/read
+    directions, so UiVj is the directed "earlier writes, later reads" channel and
+    ViUj its reverse. Labels follow that convention; the numbers do not depend on
+    it.
+    """
+    Ue = _band_slice(svd_early["U"], k, band)
+    Ve = _band_slice(svd_early["V"], k, band)
+    Ul = _band_slice(svd_late["U"], k, band)
+    Vl = _band_slice(svd_late["V"], k, band)
+    return {
+        "UiUj": subspace_overlap(Ue, Ul),
+        "ViVj": subspace_overlap(Ve, Vl),
+        "UiVj": subspace_overlap(Ue, Vl),
+        "ViUj": subspace_overlap(Ve, Ul),
     }
 
 
@@ -197,7 +249,9 @@ def run_experiment(model_key: str, output_dir: str):
         layer_svds = []
         for li in range(n_layers):
             U, S, Vt = get_layer_svd(model, li)
-            layer_svds.append({"U": U, "S": S})
+            # Keep both factors: U (left/write) and V = Vt.T (right/read).
+            # Memory roughly doubles vs the original (two d x d factors per layer).
+            layer_svds.append({"U": U, "V": Vt.T, "S": S})
 
         step_results = {"adjacent_pairs": {}, "non_adjacent": {}}
 
@@ -207,24 +261,25 @@ def run_experiment(model_key: str, output_dir: str):
             pair_data = {}
 
             for k in K_VALUES:
-                # Top-k subspaces (structural directions)
-                U1_top = layer_svds[li]["U"][:, :k]
-                U2_top = layer_svds[li + 1]["U"][:, :k]
+                # All four block relations, for the top-k and bottom-k bands.
+                top_rel = relations_for_pair(layer_svds[li], layer_svds[li + 1], k, "top")
+                bot_rel = relations_for_pair(layer_svds[li], layer_svds[li + 1], k, "bot")
 
-                # Bottom-k subspaces (flexible directions)
-                U1_bot = layer_svds[li]["U"][:, -k:]
-                U2_bot = layer_svds[li + 1]["U"][:, -k:]
+                # Legacy keys preserved exactly (UiUj == original left-vs-left
+                # overlap), so existing figures reproduce unchanged.
+                pair_data[f"top{k}"] = top_rel["UiUj"]
+                pair_data[f"bot{k}"] = bot_rel["UiUj"]
 
-                top_overlap = subspace_overlap(U1_top, U2_top)
-                bot_overlap = subspace_overlap(U1_bot, U2_bot)
-
-                pair_data[f"top{k}"] = top_overlap
-                pair_data[f"bot{k}"] = bot_overlap
+                # Full relation set (UiUj, ViVj, UiVj, ViUj).
+                pair_data[f"top{k}_rel"] = top_rel
+                pair_data[f"bot{k}_rel"] = bot_rel
 
                 print(f"    Layers {li}-{li+1}, k={k:2d}: "
-                      f"top={top_overlap['mean_cosine']:.4f}  "
-                      f"bot={bot_overlap['mean_cosine']:.4f}  "
-                      f"(random={baselines[k]['mean_cosine_mean']:.4f})")
+                      f"UiUj={top_rel['UiUj']['mean_cosine']:.4f}  "
+                      f"ViVj={top_rel['ViVj']['mean_cosine']:.4f}  "
+                      f"UiVj={top_rel['UiVj']['mean_cosine']:.4f}  "
+                      f"ViUj={top_rel['ViUj']['mean_cosine']:.4f}  "
+                      f"(rand={baselines[k]['mean_cosine_mean']:.4f})")
 
             step_results["adjacent_pairs"][pair_key] = pair_data
 
@@ -238,20 +293,24 @@ def run_experiment(model_key: str, output_dir: str):
         ]
 
         for l1, l2, label in global_pairs:
+            # global_pairs are all ordered l1 < l2 (earlier, later).
             pair_data = {}
             for k in K_VALUES:
-                U1_top = layer_svds[l1]["U"][:, :k]
-                U2_top = layer_svds[l2]["U"][:, :k]
-                U1_bot = layer_svds[l1]["U"][:, -k:]
-                U2_bot = layer_svds[l2]["U"][:, -k:]
+                top_rel = relations_for_pair(layer_svds[l1], layer_svds[l2], k, "top")
+                bot_rel = relations_for_pair(layer_svds[l1], layer_svds[l2], k, "bot")
 
-                pair_data[f"top{k}"] = subspace_overlap(U1_top, U2_top)
-                pair_data[f"bot{k}"] = subspace_overlap(U1_bot, U2_bot)
+                pair_data[f"top{k}"] = top_rel["UiUj"]
+                pair_data[f"bot{k}"] = bot_rel["UiUj"]
+                pair_data[f"top{k}_rel"] = top_rel
+                pair_data[f"bot{k}_rel"] = bot_rel
 
             step_results["non_adjacent"][label] = pair_data
+            r10 = pair_data["top10_rel"]
             print(f"    Global {label} (layers {l1}-{l2}), k=10: "
-                  f"top={pair_data['top10']['mean_cosine']:.4f}  "
-                  f"bot={pair_data['bot10']['mean_cosine']:.4f}")
+                  f"UiUj={r10['UiUj']['mean_cosine']:.4f}  "
+                  f"ViVj={r10['ViVj']['mean_cosine']:.4f}  "
+                  f"UiVj={r10['UiVj']['mean_cosine']:.4f}  "
+                  f"ViUj={r10['ViUj']['mean_cosine']:.4f}")
 
         results["checkpoints"][str(step)] = step_results
 
@@ -393,6 +452,71 @@ def plot_results(results: dict, output_dir: str):
     plt.close()
 
 
+def plot_relations(results: dict, output_dir: str):
+    """Plot all four cross-layer relations (adjacent-pair mean) across training.
+
+    Purely descriptive: every relation is drawn against the random baseline with
+    none privileged, so you can see whether the directed channels (UiVj, ViUj)
+    track, lead, or diverge from the left-vs-left overlap (UiUj) the original
+    figures were built on. The right panel shows the directed asymmetry
+    UiVj - ViUj; a value far from zero indicates a genuine direction to the flow.
+    """
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available; skipping relation plots.")
+        return
+
+    model_key = results["model"]
+    checkpoints = sorted(int(s) for s in results["checkpoints"].keys())
+    baselines = results["random_baselines"]
+    k = 10
+    rel_keys = ["UiUj", "ViVj", "UiVj", "ViUj"]
+    colors = {"UiUj": "tab:red", "ViVj": "tab:green",
+              "UiVj": "tab:purple", "ViUj": "tab:orange"}
+
+    means = {rk: [] for rk in rel_keys}
+    for step in checkpoints:
+        pairs = results["checkpoints"][str(step)]["adjacent_pairs"]
+        for rk in rel_keys:
+            vals = [pairs[pk][f"top{k}_rel"][rk]["mean_cosine"] for pk in pairs]
+            means[rk].append(float(np.mean(vals)))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    fig.suptitle(f"Cross-layer relations: Pythia-{model_key} "
+                 f"(top-{k}, adjacent-pair mean)", fontsize=13)
+
+    for rk in rel_keys:
+        ax1.plot(checkpoints, means[rk], "o-", color=colors[rk], label=rk)
+    bl = baselines[str(k)]
+    ax1.axhline(bl["mean_cosine_mean"], color="gray", linestyle="--",
+                alpha=0.7, label="random")
+    ax1.fill_between(checkpoints,
+                     bl["mean_cosine_mean"] - 2 * bl["mean_cosine_std"],
+                     bl["mean_cosine_mean"] + 2 * bl["mean_cosine_std"],
+                     color="gray", alpha=0.15)
+    ax1.set_xscale("symlog", linthresh=100)
+    ax1.set_xlabel("Training step")
+    ax1.set_ylabel("Mean cosine (adjacent layers)")
+    ax1.set_title("All four block relations")
+    ax1.legend(fontsize=9)
+    ax1.set_ylim(bottom=0)
+
+    asym = [means["UiVj"][i] - means["ViUj"][i] for i in range(len(checkpoints))]
+    ax2.plot(checkpoints, asym, "o-", color="black")
+    ax2.axhline(0, color="gray", linestyle="--", alpha=0.7)
+    ax2.set_xscale("symlog", linthresh=100)
+    ax2.set_xlabel("Training step")
+    ax2.set_ylabel("UiVj - ViUj (mean cosine)")
+    ax2.set_title("Directed asymmetry (>0: earlier-writes / later-reads stronger)")
+
+    plt.tight_layout()
+    plot_path = os.path.join(output_dir, f"crosslayer_relations_{model_key}.png")
+    plt.savefig(plot_path, dpi=150)
+    print(f"Relation plot saved to {plot_path}")
+    plt.close()
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -408,5 +532,6 @@ if __name__ == "__main__":
     for model_key in args.models:
         results = run_experiment(model_key, args.output_dir)
         plot_results(results, args.output_dir)
+        plot_relations(results, args.output_dir)
 
     print("\nDone. All results saved to", args.output_dir)
