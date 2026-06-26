@@ -18,6 +18,17 @@ Checkpoints: 50000, 240000, 480000, 715000, 955000, 1195000, 1431000
 
 Usage:
     python experiment_pairwise_overlap_tinyllama.py
+
+PATCH (read/write side): keeps the original symmetric overlap_matrix (as
+  overlap_matrix and UU) and adds, per checkpoint, UU/VV/UV matrices:
+      UU : symmetric, (i,j) = left_i  vs left_j   ("write vs write", == original)
+      VV : symmetric, (i,j) = right_i vs right_j  ("read vs read")
+      UV : full,      (i,j) = left_i  vs right_j  (directed: i writes -> j reads)
+  UV is intentionally non-symmetric (UV[i][j] vs UV[j][i] encode the two flow
+  directions). Convention verified numerically (composed @ V[:,i] = S[i]*U[:,i]).
+  TinyLlama is SwiGLU, so composed = W_down @ W_up still excludes the gate.
+PATCH (disk): each checkpoint repo is deleted from the HF cache once its data has
+  been gathered (default on; --keep_checkpoints to retain).
 """
 
 import json
@@ -82,13 +93,53 @@ def load_model_at_checkpoint(step: int):
         cache_dir=CACHE_DIR,
     )
     model.eval()
-    return model
+    # Each checkpoint is its own repo; revision is the default branch.
+    return model, repo, "main"
 
 
-def get_layer_svd_top_k(model, layer_idx: int, k: int) -> np.ndarray:
+def _ref_matches(rev, revision):
+    """True if a cached revision corresponds to the loaded ref or commit."""
+    if revision == rev.commit_hash:
+        return True
+    return any(r == revision or r.endswith("/" + revision) for r in rev.refs)
+
+
+def free_checkpoint(repo_id, revision, cache_dir=None):
+    """Delete a single downloaded checkpoint from the HF cache.
+
+    Frees disk once a checkpoint's data has been gathered. Best-effort and safe:
+    matches the exact repo_id and the ref/commit loaded, deletes only those, and
+    never raises into the sweep. A miss is a no-op.
     """
-    Get top-k left singular vectors of composed MLP product W_down @ W_up.
-    Returns U_topk of shape (d_model, k).
+    try:
+        from huggingface_hub import scan_cache_dir
+        info = scan_cache_dir(cache_dir=cache_dir)
+    except Exception as e:
+        print(f"  [cache] skip free for {repo_id}@{revision}: cannot scan cache ({e})")
+        return
+    commit_hashes = [
+        rev.commit_hash
+        for repo in info.repos if repo.repo_id == repo_id
+        for rev in repo.revisions if _ref_matches(rev, revision)
+    ]
+    if not commit_hashes:
+        print(f"  [cache] nothing to free for {repo_id}@{revision} (not in cache)")
+        return
+    try:
+        strategy = info.delete_revisions(*commit_hashes)
+        freed = strategy.expected_freed_size_str
+        strategy.execute()
+        print(f"  [cache] freed {freed}: deleted {repo_id}@{revision}")
+    except Exception as e:
+        print(f"  [cache] could not delete {repo_id}@{revision}: {e}")
+
+
+def get_layer_svd_uv(model, layer_idx: int, k: int):
+    """Top-k left (write) and right (read) singular vectors of W_down @ W_up.
+
+    Returns (U_topk, V_topk), each (d_model, k). TinyLlama is SwiGLU; this
+    composed product excludes the gate (gate_proj), matching the other static
+    measurements.
     """
     mlp = model.model.layers[layer_idx].mlp
     W_up = mlp.up_proj.weight.detach().float()
@@ -96,14 +147,36 @@ def get_layer_svd_top_k(model, layer_idx: int, k: int) -> np.ndarray:
 
     composed = (W_down @ W_up).cpu().numpy()
     U, S, Vt = np.linalg.svd(composed, full_matrices=False)
-    return U[:, :k]
+    return U[:, :k], Vt[:k].T
+
+
+def _symmetric_matrix(blocks):
+    """Symmetric NxN matrix of mean principal-angle cosines, diagonal = 1."""
+    n = len(blocks)
+    M = np.ones((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            v = mean_subspace_overlap(blocks[i], blocks[j])
+            M[i, j] = v
+            M[j, i] = v
+    return M.tolist()
+
+
+def _directed_matrix(row_blocks, col_blocks):
+    """Full (non-symmetric) NxN: entry [i, j] = overlap(row_blocks[i], col_blocks[j])."""
+    n = len(row_blocks)
+    M = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            M[i, j] = mean_subspace_overlap(row_blocks[i], col_blocks[j])
+    return M.tolist()
 
 
 # ---------------------------------------------------------------------------
 # Main experiment
 # ---------------------------------------------------------------------------
 
-def run_experiment(output_dir: str):
+def run_experiment(output_dir: str, free_checkpoints: bool = True):
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, "pairwise_overlap_tinyllama_1b.json")
 
@@ -126,57 +199,54 @@ def run_experiment(output_dir: str):
     steps = sorted(CHECKPOINT_REPOS.keys())
 
     for step in steps:
-        if str(step) in results["checkpoints"]:
-            print(f"\n  Skipping step {step} (already computed)")
+        existing = results["checkpoints"].get(str(step))
+        if existing is not None and all(key in existing for key in ("UU", "VV", "UV")):
+            print(f"\n  Skipping step {step} (already computed, all relations present)")
             continue
 
         print(f"\n{'=' * 60}")
         print(f"  Step {step}")
         print(f"{'=' * 60}")
 
-        model = load_model_at_checkpoint(step)
+        model, repo, revision = load_model_at_checkpoint(step)
 
-        # Extract top-k SVDs for all layers
+        # Extract top-k left (write) and right (read) singular vectors per layer
         print(f"  Computing SVDs for {N_LAYERS} layers...")
-        layer_U = []
+        layer_U, layer_V = [], []
         for li in range(N_LAYERS):
-            U_k = get_layer_svd_top_k(model, li, K)
+            U_k, V_k = get_layer_svd_uv(model, li, K)
             layer_U.append(U_k)
+            layer_V.append(V_k)
 
-        # Compute full pairwise overlap matrix
-        print(f"  Computing pairwise overlaps ({N_LAYERS * (N_LAYERS - 1) // 2} pairs)...")
-        overlap_matrix = np.zeros((N_LAYERS, N_LAYERS))
+        # Pairwise overlap matrices for all block relations
+        print(f"  Computing pairwise overlaps (UU, VV, UV)...")
+        UU = _symmetric_matrix(layer_U)
+        VV = _symmetric_matrix(layer_V)
+        UV = _directed_matrix(layer_U, layer_V)
+        overlap_matrix = np.array(UU)  # summary stats on left-vs-left, as before
 
-        for i in range(N_LAYERS):
-            for j in range(N_LAYERS):
-                if i == j:
-                    overlap_matrix[i, j] = 1.0
-                elif j > i:
-                    ov = mean_subspace_overlap(layer_U[i], layer_U[j])
-                    overlap_matrix[i, j] = ov
-                    overlap_matrix[j, i] = ov
-
-        # Print summary
-        n_above = np.sum(overlap_matrix[np.triu_indices(N_LAYERS, k=1)] > 0.15)
+        # Print summary (on UU, matching the original metric)
+        n_above = int(np.sum(overlap_matrix[np.triu_indices(N_LAYERS, k=1)] > 0.15))
         n_total = N_LAYERS * (N_LAYERS - 1) // 2
-        mean_d1 = np.mean([overlap_matrix[i, i + 1] for i in range(N_LAYERS - 1)])
-
-        d3_pairs = [(i, i + 3) for i in range(N_LAYERS - 3)]
-        mean_d3 = np.mean([overlap_matrix[i, j] for i, j in d3_pairs])
-
-        d5_pairs = [(i, i + 5) for i in range(N_LAYERS - 5)]
-        mean_d5 = np.mean([overlap_matrix[i, j] for i, j in d5_pairs])
+        mean_d1 = float(np.mean([overlap_matrix[i, i + 1] for i in range(N_LAYERS - 1)]))
+        mean_d3 = float(np.mean([overlap_matrix[i, i + 3] for i in range(N_LAYERS - 3)]))
+        mean_d5 = float(np.mean([overlap_matrix[i, i + 5] for i in range(N_LAYERS - 5)]))
 
         print(f"  Pairs > 0.15: {n_above}/{n_total} ({100 * n_above / n_total:.0f}%)")
         print(f"  Mean d=1: {mean_d1:.3f}  d=3: {mean_d3:.3f}  d=5: {mean_d5:.3f}")
 
         results["checkpoints"][str(step)] = {
-            "overlap_matrix": overlap_matrix.tolist(),
+            "overlap_matrix": UU,  # backward-compatible alias (left-vs-left)
+            "UU": UU,
+            "VV": VV,
+            "UV": UV,
         }
 
-        del model, layer_U
+        del model, layer_U, layer_V
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if free_checkpoints:
+            free_checkpoint(repo, revision, CACHE_DIR)
 
         # Save after each checkpoint
         with open(out_path, "w") as f:
@@ -196,6 +266,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Pairwise Subspace Overlap (TinyLlama-1.1B)")
     parser.add_argument("--output_dir", default="results/pairwise_overlap")
+    parser.add_argument("--keep_checkpoints", action="store_true",
+                        help="Keep downloaded checkpoints in the HF cache. Default: "
+                             "delete each checkpoint from the cache once its data has "
+                             "been gathered, to save disk during long sweeps.")
     args = parser.parse_args()
 
-    run_experiment(args.output_dir)
+    run_experiment(args.output_dir, free_checkpoints=not args.keep_checkpoints)

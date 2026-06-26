@@ -49,6 +49,12 @@ Checkpoints: 50K, 240K, 480K, 715K, 955K, 1195K, 1431K steps
 
 Usage:
     python experiment_gate_crosslayer_tinyllama.py [--n_samples 256]
+
+PATCH (disk): each checkpoint is deleted from the HF cache once its data has been
+  gathered (default on; --keep_checkpoints to retain). The read/write four-relation
+  split used in the static-weight scripts does NOT apply here: this experiment
+  compares gate ACTIVATION vectors between layers, not singular subspaces of a
+  composed weight product, so there is no left/right (write/read) side to split.
 """
 
 import argparse
@@ -109,7 +115,12 @@ SAMPLE_TEXTS = [
 # ---------------------------------------------------------------------------
 
 def load_model_at_checkpoint(repo_id: str):
-    """Load a TinyLlama checkpoint from a HuggingFace repo."""
+    """Load a TinyLlama checkpoint from a HuggingFace repo.
+
+    Returns (model, repo_id, revision) so the caller can free exactly this
+    checkpoint once its data has been gathered. Each checkpoint here is its own
+    repo, so revision is the default branch ("main").
+    """
     print(f"  Loading {repo_id}...")
     from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(
@@ -119,7 +130,46 @@ def load_model_at_checkpoint(repo_id: str):
         cache_dir=CACHE_DIR,
     )
     model.eval()
-    return model
+    return model, repo_id, "main"
+
+
+def _ref_matches(rev, revision):
+    """True if a cached revision corresponds to the loaded ref or commit."""
+    if revision == rev.commit_hash:
+        return True
+    return any(r == revision or r.endswith("/" + revision) for r in rev.refs)
+
+
+def free_checkpoint(repo_id, revision, cache_dir=None):
+    """Delete a single downloaded checkpoint from the HF cache.
+
+    Frees disk once a checkpoint's data has been gathered. Best-effort and safe:
+    it matches the exact repo_id and the ref/commit that was loaded, deletes only
+    those, and never raises into the sweep (a failure prints a warning and the run
+    continues). A miss is a no-op. Important here: each TinyLlama checkpoint is a
+    full separate repo (multiple GB), so these accumulate fast without cleanup.
+    """
+    try:
+        from huggingface_hub import scan_cache_dir
+        info = scan_cache_dir(cache_dir=cache_dir)
+    except Exception as e:
+        print(f"  [cache] skip free for {repo_id}@{revision}: cannot scan cache ({e})")
+        return
+    commit_hashes = [
+        rev.commit_hash
+        for repo in info.repos if repo.repo_id == repo_id
+        for rev in repo.revisions if _ref_matches(rev, revision)
+    ]
+    if not commit_hashes:
+        print(f"  [cache] nothing to free for {repo_id}@{revision} (not in cache)")
+        return
+    try:
+        strategy = info.delete_revisions(*commit_hashes)
+        freed = strategy.expected_freed_size_str
+        strategy.execute()
+        print(f"  [cache] freed {freed}: deleted {repo_id}@{revision}")
+    except Exception as e:
+        print(f"  [cache] could not delete {repo_id}@{revision}: {e}")
 
 
 def get_tokenizer():
@@ -275,7 +325,7 @@ def random_gate_baseline(d_ff: int, n_samples: int = 256,
 # Main experiment
 # ---------------------------------------------------------------------------
 
-def run_experiment(n_samples: int, output_dir: str):
+def run_experiment(n_samples: int, output_dir: str, free_checkpoints: bool = True):
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, "gate_crosslayer_tinyllama_1b.json")
 
@@ -319,7 +369,7 @@ def run_experiment(n_samples: int, output_dir: str):
         print(f"  Step {step:,} ({tokens} tokens)")
         print(f"{'=' * 60}")
 
-        model = load_model_at_checkpoint(repo_id)
+        model, repo, revision = load_model_at_checkpoint(repo_id)
         gate_vectors = collect_gate_vectors(model, input_ids, n_samples)
 
         step_results = {"adjacent_pairs": {}, "non_adjacent": {}}
@@ -379,6 +429,8 @@ def run_experiment(n_samples: int, output_dir: str):
         del model, gate_vectors
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if free_checkpoints:
+            free_checkpoint(repo, revision, CACHE_DIR)
 
         with open(out_path, "w") as f:
             json.dump(results, f, indent=2)
@@ -398,6 +450,11 @@ if __name__ == "__main__":
     parser.add_argument("--n_samples", type=int, default=256,
                         help="Number of token positions to sample per checkpoint")
     parser.add_argument("--output_dir", default="results/gate_crosslayer")
+    parser.add_argument("--keep_checkpoints", action="store_true",
+                        help="Keep downloaded checkpoints in the HF cache. Default: "
+                             "delete each checkpoint from the cache once its data has "
+                             "been gathered, to save disk during long sweeps.")
     args = parser.parse_args()
 
-    run_experiment(args.n_samples, args.output_dir)
+    run_experiment(args.n_samples, args.output_dir,
+                   free_checkpoints=not args.keep_checkpoints)

@@ -28,6 +28,21 @@ Model: BLOOM-1b1 (bigscience/bloom-1b1-intermediate)
 Usage:
     python bloom_experiments.py [--checkpoints 1000 5000 10000 ...] [--k 10]
     python bloom_experiments.py --quick   # subset of checkpoints for testing
+
+PATCH (read/write side): every cross-layer overlap (pairwise, adjacent,
+  redistribution) now also reports the four block relations, keyed by the exact
+  singular-vector blocks compared:
+      UiUj : left  vs left   ("write vs write", == the original top{k}/matrix)
+      ViVj : right vs right  ("read vs read")
+      UiVj : left(earlier)  vs right(later)  (directed: earlier writes -> later reads)
+      ViUj : right(earlier) vs left(later)   (reverse direction)
+  Pairwise stores UU/VV/UV matrices (UV non-symmetric); adjacent and
+  redistribution store a "..._rel" dict per boundary. Legacy keys are unchanged,
+  so the existing plots still work. Convention verified numerically
+  (composed @ V[:,i] = S[i]*U[:,i]); BLOOM is GELU (two-matrix MLP), so the
+  composed product is the full linear map with no gate to exclude.
+PATCH (disk): each checkpoint is deleted from the HF cache once its data has been
+  gathered (default on; --keep_checkpoints to retain).
 """
 
 import argparse
@@ -118,7 +133,8 @@ def load_bloom_at_step(step: int):
     """Load BLOOM-1b1 at a specific training step.
 
     Uses the intermediate checkpoint repo for all steps except 'final',
-    which loads the fully trained model.
+    which loads the fully trained model. Returns (model, repo, revision) so the
+    caller can free exactly this checkpoint; returns (None, None, None) on failure.
     """
     from transformers import AutoModelForCausalLM
 
@@ -145,10 +161,52 @@ def load_bloom_at_step(step: int):
         model = AutoModelForCausalLM.from_pretrained(repo, **kwargs)
     except Exception as e:
         print(f"  WARNING: Failed to load step {step}: {e}")
-        return None
+        return None, None, None
 
     model.eval()
-    return model
+    # revision is None for the final model; the cache ref is then "main".
+    return model, repo, (revision or "main")
+
+
+def _ref_matches(rev, revision):
+    """True if a cached revision corresponds to the loaded ref or commit."""
+    if revision == rev.commit_hash:
+        return True
+    return any(r == revision or r.endswith("/" + revision) for r in rev.refs)
+
+
+def free_checkpoint(repo_id, revision, cache_dir=None):
+    """Delete a single downloaded checkpoint (model revision) from the HF cache.
+
+    Frees disk once a checkpoint's data has been gathered. Best-effort and safe:
+    matches the exact repo_id and the ref/commit loaded, deletes only those, and
+    never raises into the sweep (a failure prints a warning and the run continues).
+    A miss is a no-op. BLOOM's intermediate checkpoints are revisions of one repo,
+    so this deletes each revision's blobs individually.
+    """
+    if repo_id is None:
+        return
+    try:
+        from huggingface_hub import scan_cache_dir
+        info = scan_cache_dir(cache_dir=cache_dir)
+    except Exception as e:
+        print(f"  [cache] skip free for {repo_id}@{revision}: cannot scan cache ({e})")
+        return
+    commit_hashes = [
+        rev.commit_hash
+        for repo in info.repos if repo.repo_id == repo_id
+        for rev in repo.revisions if _ref_matches(rev, revision)
+    ]
+    if not commit_hashes:
+        print(f"  [cache] nothing to free for {repo_id}@{revision} (not in cache)")
+        return
+    try:
+        strategy = info.delete_revisions(*commit_hashes)
+        freed = strategy.expected_freed_size_str
+        strategy.execute()
+        print(f"  [cache] freed {freed}: deleted {repo_id}@{revision}")
+    except Exception as e:
+        print(f"  [cache] could not delete {repo_id}@{revision}: {e}")
 
 
 def get_bloom_layer_svd(model, layer_idx: int):
@@ -160,31 +218,83 @@ def get_bloom_layer_svd(model, layer_idx: int):
         dense_4h_to_h: Linear(d_ff, d_model)   -- down projection
 
     Composed product: W_down @ W_up has shape (d_model, d_model).
-    Returns (U, S) where U columns are left singular vectors.
+    Returns (U, S, Vt): U columns are left (write) singular vectors, rows of Vt
+    are right (read) singular vectors.
     """
     mlp = model.transformer.h[layer_idx].mlp
     W_up = mlp.dense_h_to_4h.weight.detach().float()    # (d_ff, d_model)
     W_down = mlp.dense_4h_to_h.weight.detach().float()   # (d_model, d_ff)
     composed = (W_down @ W_up).cpu().numpy()              # (d_model, d_model)
-    U, S, _ = np.linalg.svd(composed, full_matrices=True)
-    return U, S
+    U, S, Vt = np.linalg.svd(composed, full_matrices=True)
+    return U, S, Vt
 
 
 def get_all_layer_svds(model, n_layers: int, k_max: int):
-    """Compute SVD for all layers, keeping top-k_max left singular vectors.
+    """Compute SVD for all layers, keeping top-k_max left and right singular vectors.
 
-    Returns list of dicts with keys 'U_topk' and 'S'.
+    Returns list of dicts with keys 'U_topk' (write), 'V_topk' (read), and 'S'.
     """
     layer_data = []
     for li in range(n_layers):
-        U, S = get_bloom_layer_svd(model, li)
+        U, S, Vt = get_bloom_layer_svd(model, li)
         layer_data.append({
-            "U_topk": U[:, :k_max],  # only keep what we need
+            "U_topk": U[:, :k_max],     # left / write directions
+            "V_topk": Vt[:k_max].T,     # right / read directions
             "S": S,
         })
         print(f"    SVD layer {li}/{n_layers}  "
               f"(top SV: {S[0]:.2f}, eff_rank: {effective_rank(S):.1f})")
     return layer_data
+
+
+def _pair_relations(li_data, lj_data, k):
+    """Four cross-layer block relations between an earlier layer i and later j.
+
+    Keys name the blocks compared (first = earlier, second = later). Under the
+    column-vector convention (composed = U S V^T, verified numerically), U are
+    write directions and V read directions, so UiVj is the directed
+    "earlier writes -> later reads" channel and ViUj its reverse.
+    """
+    Ui, Vi = li_data["U_topk"][:, :k], li_data["V_topk"][:, :k]
+    Uj, Vj = lj_data["U_topk"][:, :k], lj_data["V_topk"][:, :k]
+    return {
+        "UiUj": mean_cosine_overlap(Ui, Uj),
+        "ViVj": mean_cosine_overlap(Vi, Vj),
+        "UiVj": mean_cosine_overlap(Ui, Vj),
+        "ViUj": mean_cosine_overlap(Vi, Uj),
+    }
+
+
+def _symmetric_matrix(blocks):
+    """Symmetric NxN matrix of mean principal-angle cosines, diagonal = 1."""
+    n = len(blocks)
+    M = np.ones((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            v = mean_cosine_overlap(blocks[i], blocks[j])
+            M[i, j] = v
+            M[j, i] = v
+    return M.tolist()
+
+
+def _directed_matrix(row_blocks, col_blocks):
+    """Full (non-symmetric) NxN: entry [i, j] = overlap(row_blocks[i], col_blocks[j])."""
+    n = len(row_blocks)
+    M = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            M[i, j] = mean_cosine_overlap(row_blocks[i], col_blocks[j])
+    return M.tolist()
+
+
+def _has_relations(step_results: dict) -> bool:
+    """True if a stored checkpoint already carries the four-relation data."""
+    adj = step_results.get("adjacent", {})
+    if adj:
+        any_b = next(iter(adj.values()))
+        if any(key.endswith("_rel") for key in any_b):
+            return True
+    return False
 
 
 def effective_rank(sv: np.ndarray) -> float:
@@ -203,7 +313,7 @@ def effective_rank(sv: np.ndarray) -> float:
 # ---------------------------------------------------------------------------
 
 def compute_pairwise_matrix(layer_data: list, k: int) -> list:
-    """NxN matrix of top-k mean cosine overlap between all layer pairs."""
+    """NxN matrix of top-k mean cosine overlap between all layer pairs (left-vs-left)."""
     n = len(layer_data)
     matrix = np.ones((n, n))
     for i in range(n):
@@ -215,6 +325,20 @@ def compute_pairwise_matrix(layer_data: list, k: int) -> list:
             matrix[i, j] = val
             matrix[j, i] = val
     return matrix.tolist()
+
+
+def compute_pairwise_matrices(layer_data: list, k: int) -> dict:
+    """UU/VV/UV top-k overlap matrices between all layer pairs.
+
+    UU/VV symmetric; UV[i][j] = write_i vs read_j (non-symmetric, directed).
+    """
+    Us = [ld["U_topk"][:, :k] for ld in layer_data]
+    Vs = [ld["V_topk"][:, :k] for ld in layer_data]
+    return {
+        "UU": _symmetric_matrix(Us),
+        "VV": _symmetric_matrix(Vs),
+        "UV": _directed_matrix(Us, Vs),
+    }
 
 
 def pairwise_summary_stats(matrix: list, threshold: float = 0.15) -> dict:
@@ -258,7 +382,8 @@ def pairwise_summary_stats(matrix: list, threshold: float = 0.15) -> dict:
 def compute_adjacent_overlaps(layer_data: list, k_values: list) -> dict:
     """For each adjacent pair, compute top-k overlap at multiple k values.
 
-    Returns dict keyed by boundary string "i-(i+1)" with overlap values.
+    Returns dict keyed by boundary string "i-(i+1)". Each boundary carries the
+    legacy top{k} (left-vs-left) plus top{k}_rel with all four block relations.
     """
     n = len(layer_data)
     results = {}
@@ -266,11 +391,9 @@ def compute_adjacent_overlaps(layer_data: list, k_values: list) -> dict:
         boundary = f"{i}-{i+1}"
         boundary_data = {}
         for k in k_values:
-            val = mean_cosine_overlap(
-                layer_data[i]["U_topk"][:, :k],
-                layer_data[i + 1]["U_topk"][:, :k],
-            )
-            boundary_data[f"top{k}"] = val
+            rel = _pair_relations(layer_data[i], layer_data[i + 1], k)
+            boundary_data[f"top{k}"] = rel["UiUj"]       # legacy (left-vs-left)
+            boundary_data[f"top{k}_rel"] = rel
         results[boundary] = boundary_data
         print(f"    Boundary {boundary}: "
               + ", ".join(f"top{k}={boundary_data[f'top{k}']:.3f}" for k in k_values))
@@ -285,16 +408,16 @@ def compute_boundary_redistribution(layer_data: list, k_values: list,
                                      boundary_idx: int) -> dict:
     """Detailed overlap at a specific boundary across multiple k values.
 
-    Returns dict with overlap at each k, useful for tracking redistribution
-    from narrow to broad subspaces (Tables 1-2 equivalent).
+    Each k carries the legacy top{k} (left-vs-left) plus top{k}_rel with all four
+    block relations. Useful for tracking redistribution from narrow to broad
+    subspaces (Tables 1-2 equivalent).
     """
     i = boundary_idx
     results = {}
     for k in k_values:
-        results[f"top{k}"] = mean_cosine_overlap(
-            layer_data[i]["U_topk"][:, :k],
-            layer_data[i + 1]["U_topk"][:, :k],
-        )
+        rel = _pair_relations(layer_data[i], layer_data[i + 1], k)
+        results[f"top{k}"] = rel["UiUj"]
+        results[f"top{k}_rel"] = rel
     return results
 
 
@@ -302,7 +425,8 @@ def compute_boundary_redistribution(layer_data: list, k_values: list,
 # Main runner
 # ---------------------------------------------------------------------------
 
-def run_all(checkpoints: list, k_values: list, output_dir: str):
+def run_all(checkpoints: list, k_values: list, output_dir: str,
+            free_checkpoints: bool = True):
     n_layers = N_LAYERS
     k_max = max(k_values)
 
@@ -340,15 +464,16 @@ def run_all(checkpoints: list, k_values: list, output_dir: str):
 
     for step in checkpoints:
         step_key = str(step)
-        if step_key in results["checkpoints"]:
-            print(f"\nSkipping step {step} (already computed)")
+        existing = results["checkpoints"].get(step_key)
+        if existing is not None and _has_relations(existing):
+            print(f"\nSkipping step {step} (already computed, relations present)")
             continue
 
         print(f"\n{'='*60}")
         print(f"  BLOOM-1b1 -- step {step}")
         print(f"{'='*60}")
 
-        model = load_bloom_at_step(step)
+        model, repo, revision = load_bloom_at_step(step)
         if model is None:
             print(f"  Skipping step {step} (load failed)")
             continue
@@ -368,13 +493,16 @@ def run_all(checkpoints: list, k_values: list, output_dir: str):
 
         step_results = {}
 
-        # --- Experiment 1: Pairwise overlap matrix ---
-        print("  Computing pairwise overlap matrix...")
+        # --- Experiment 1: Pairwise overlap matrices (UU/VV/UV) ---
+        print("  Computing pairwise overlap matrices...")
         for k in k_values:
-            matrix = compute_pairwise_matrix(layer_data, k)
-            summary = pairwise_summary_stats(matrix)
+            mats = compute_pairwise_matrices(layer_data, k)
+            summary = pairwise_summary_stats(mats["UU"])  # stats on left-vs-left
             step_results[f"pairwise_k{k}"] = {
-                "matrix": matrix,
+                "matrix": mats["UU"],  # backward-compatible alias (left-vs-left)
+                "UU": mats["UU"],
+                "VV": mats["VV"],
+                "UV": mats["UV"],
                 "summary": summary,
             }
             print(f"    k={k}: {summary['frac_above_threshold']*100:.1f}% pairs > 0.15, "
@@ -427,6 +555,8 @@ def run_all(checkpoints: list, k_values: list, output_dir: str):
             del layer_data_50
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if free_checkpoints:
+            free_checkpoint(repo, revision, CACHE_DIR)
 
     print(f"\nAll results saved to {out_path}")
     return results
@@ -731,6 +861,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--plot_only", action="store_true",
         help="Skip computation; just regenerate plots from existing results.")
+    parser.add_argument(
+        "--keep_checkpoints", action="store_true",
+        help="Keep downloaded checkpoints in the HF cache. Default: delete each "
+             "checkpoint from the cache once its data has been gathered.")
     args = parser.parse_args()
 
     if args.plot_only:
@@ -750,7 +884,8 @@ if __name__ == "__main__":
     print(f"  Output: {args.output_dir}")
     print()
 
-    results = run_all(checkpoints, args.k, args.output_dir)
+    results = run_all(checkpoints, args.k, args.output_dir,
+                      free_checkpoints=not args.keep_checkpoints)
     plot_results(args.output_dir)
 
     print("\nDone.")

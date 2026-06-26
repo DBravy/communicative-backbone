@@ -34,6 +34,17 @@ Checkpoints: 50K, 240K, 480K, 715K, 955K, 1195K, 1431K steps
 
 Usage:
     python experiment_b_crosslayer_overlap_tinyllama.py
+
+PATCH (read/write side): keeps the original top{k}/bot{k} (LEFT-vs-LEFT overlap)
+  and adds, per pair, top{k}_rel and bot{k}_rel with all four block relations:
+      UiUj : left(early)  vs left(late)    (== legacy top/bot, "write vs write")
+      ViVj : right(early) vs right(late)   ("read vs read")
+      UiVj : left(early)  vs right(late)   ("earlier writes -> later reads")
+      ViUj : right(early) vs left(late)    ("later writes -> earlier reads")
+  Convention verified numerically (composed @ V[:,i] = S[i]*U[:,i]). TinyLlama is
+  SwiGLU, so composed = W_down @ W_up still excludes the gate, exactly as before.
+PATCH (disk): each checkpoint repo is deleted from the HF cache once its data has
+  been gathered (default on; --keep_checkpoints to retain).
 """
 
 import argparse
@@ -62,7 +73,6 @@ CHECKPOINT_REPOS = [
     (50_000,    "105B",  "PY007/TinyLlama-1.1B-step-50K-105b"),
     (240_000,   "503B",  "PY007/TinyLlama-1.1B-intermediate-step-240k-503b"),
     (480_000,   "1T",    "PY007/TinyLlama-1.1B-intermediate-step-480k-1T"),
-    (715_000,   "1.5T",  "PY007/TinyLlama-1.1B-intermediate-step-715k-1.5T"),
     (955_000,   "2T",    "TinyLlama/TinyLlama-1.1B-intermediate-step-955k-token-2T"),
     (1_195_000, "2.5T",  "TinyLlama/TinyLlama-1.1B-intermediate-step-1195k-token-2.5T"),
     (1_431_000, "3T",    "TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T"),
@@ -111,6 +121,49 @@ def random_subspace_baseline(d: int, k: int, n_trials: int = 100) -> dict:
     }
 
 
+def _band_slice(M: np.ndarray, k: int, band: str) -> np.ndarray:
+    """Leading (top) or trailing (bot) k columns of an SVD factor."""
+    if band == "top":
+        return M[:, :k]
+    if band == "bot":
+        return M[:, -k:]
+    raise ValueError(f"unknown band: {band!r}")
+
+
+def relations_for_pair(svd_early: dict, svd_late: dict, k: int, band: str) -> dict:
+    """All four cross-layer subspace relations between an earlier and a later layer.
+
+    Keys name the blocks compared (first = earlier, second = later):
+        UiUj : left(early)  vs left(late)
+        ViVj : right(early) vs right(late)
+        UiVj : left(early)  vs right(late)
+        ViUj : right(early) vs left(late)
+
+    Under the column-vector convention (out = composed @ r, composed = U S V^T,
+    verified numerically), U are output/write and V input/read directions, so UiVj
+    is the directed "earlier writes, later reads" channel and ViUj its reverse.
+    """
+    Ue = _band_slice(svd_early["U"], k, band)
+    Ve = _band_slice(svd_early["V"], k, band)
+    Ul = _band_slice(svd_late["U"], k, band)
+    Vl = _band_slice(svd_late["V"], k, band)
+    return {
+        "UiUj": subspace_overlap(Ue, Ul),
+        "ViVj": subspace_overlap(Ve, Vl),
+        "UiVj": subspace_overlap(Ue, Vl),
+        "ViUj": subspace_overlap(Ve, Ul),
+    }
+
+
+def _has_relations(step_result: dict) -> bool:
+    """True if a stored checkpoint already carries the four-relation data."""
+    pairs = step_result.get("adjacent_pairs", {})
+    if not pairs:
+        return False
+    any_pair = next(iter(pairs.values()))
+    return any(key.endswith("_rel") for key in any_pair)
+
+
 # ---------------------------------------------------------------------------
 # Model loading and SVD extraction
 # ---------------------------------------------------------------------------
@@ -127,7 +180,12 @@ def get_layer_svd(model, layer_idx: int) -> tuple:
 
 
 def load_model_at_checkpoint(repo_id: str):
-    """Load a TinyLlama checkpoint from a HuggingFace repo."""
+    """Load a TinyLlama checkpoint from a HuggingFace repo.
+
+    Returns (model, repo_id, revision) so the caller can free exactly this
+    checkpoint once its data has been gathered. Each checkpoint is its own repo,
+    so revision is the default branch ("main").
+    """
     print(f"  Loading {repo_id}...")
     from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(
@@ -137,14 +195,52 @@ def load_model_at_checkpoint(repo_id: str):
         cache_dir=CACHE_DIR,
     )
     model.eval()
-    return model
+    return model, repo_id, "main"
+
+
+def _ref_matches(rev, revision):
+    """True if a cached revision corresponds to the loaded ref or commit."""
+    if revision == rev.commit_hash:
+        return True
+    return any(r == revision or r.endswith("/" + revision) for r in rev.refs)
+
+
+def free_checkpoint(repo_id, revision, cache_dir=None):
+    """Delete a single downloaded checkpoint from the HF cache.
+
+    Frees disk once a checkpoint's data has been gathered. Best-effort and safe:
+    matches the exact repo_id and the ref/commit loaded, deletes only those, and
+    never raises into the sweep. A miss is a no-op. Each TinyLlama checkpoint is a
+    full separate repo (multiple GB), so these accumulate fast without cleanup.
+    """
+    try:
+        from huggingface_hub import scan_cache_dir
+        info = scan_cache_dir(cache_dir=cache_dir)
+    except Exception as e:
+        print(f"  [cache] skip free for {repo_id}@{revision}: cannot scan cache ({e})")
+        return
+    commit_hashes = [
+        rev.commit_hash
+        for repo in info.repos if repo.repo_id == repo_id
+        for rev in repo.revisions if _ref_matches(rev, revision)
+    ]
+    if not commit_hashes:
+        print(f"  [cache] nothing to free for {repo_id}@{revision} (not in cache)")
+        return
+    try:
+        strategy = info.delete_revisions(*commit_hashes)
+        freed = strategy.expected_freed_size_str
+        strategy.execute()
+        print(f"  [cache] freed {freed}: deleted {repo_id}@{revision}")
+    except Exception as e:
+        print(f"  [cache] could not delete {repo_id}@{revision}: {e}")
 
 
 # ---------------------------------------------------------------------------
 # Main experiment
 # ---------------------------------------------------------------------------
 
-def run_experiment(output_dir: str):
+def run_experiment(output_dir: str, free_checkpoints: bool = True):
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, "crosslayer_overlap_tinyllama_1b.json")
 
@@ -180,21 +276,23 @@ def run_experiment(output_dir: str):
 
     for step, tokens, repo_id in CHECKPOINT_REPOS:
         step_key = str(step)
-        if step_key in results["checkpoints"]:
-            print(f"\n  Skipping step {step:,} (already computed)")
+        existing = results["checkpoints"].get(step_key)
+        if existing is not None and _has_relations(existing):
+            print(f"\n  Skipping step {step:,} (already computed, relations present)")
             continue
 
         print(f"\n{'='*60}")
         print(f"  TinyLlama -- step {step:,} ({tokens} tokens)")
         print(f"{'='*60}")
 
-        model = load_model_at_checkpoint(repo_id)
+        model, repo, revision = load_model_at_checkpoint(repo_id)
 
         # Extract SVDs for all layers
         layer_svds = []
         for li in range(N_LAYERS):
             U, S, Vt = get_layer_svd(model, li)
-            layer_svds.append({"U": U, "S": S})
+            # Keep both factors: U (left/write) and V = Vt.T (right/read).
+            layer_svds.append({"U": U, "V": Vt.T, "S": S})
 
         step_results = {"adjacent_pairs": {}, "non_adjacent": {}}
 
@@ -204,22 +302,24 @@ def run_experiment(output_dir: str):
             pair_data = {}
 
             for k in K_VALUES:
-                U1_top = layer_svds[li]["U"][:, :k]
-                U2_top = layer_svds[li + 1]["U"][:, :k]
+                # All four block relations, for the top-k and bottom-k bands.
+                top_rel = relations_for_pair(layer_svds[li], layer_svds[li + 1], k, "top")
+                bot_rel = relations_for_pair(layer_svds[li], layer_svds[li + 1], k, "bot")
 
-                U1_bot = layer_svds[li]["U"][:, -k:]
-                U2_bot = layer_svds[li + 1]["U"][:, -k:]
+                # Legacy keys preserved exactly (UiUj == original left-vs-left).
+                pair_data[f"top{k}"] = top_rel["UiUj"]
+                pair_data[f"bot{k}"] = bot_rel["UiUj"]
 
-                top_overlap = subspace_overlap(U1_top, U2_top)
-                bot_overlap = subspace_overlap(U1_bot, U2_bot)
-
-                pair_data[f"top{k}"] = top_overlap
-                pair_data[f"bot{k}"] = bot_overlap
+                # Full relation set (UiUj, ViVj, UiVj, ViUj).
+                pair_data[f"top{k}_rel"] = top_rel
+                pair_data[f"bot{k}_rel"] = bot_rel
 
                 print(f"    Layers {li}-{li+1}, k={k:2d}: "
-                      f"top={top_overlap['mean_cosine']:.4f}  "
-                      f"bot={bot_overlap['mean_cosine']:.4f}  "
-                      f"(random={baselines[k]['mean_cosine_mean']:.4f})")
+                      f"UiUj={top_rel['UiUj']['mean_cosine']:.4f}  "
+                      f"ViVj={top_rel['ViVj']['mean_cosine']:.4f}  "
+                      f"UiVj={top_rel['UiVj']['mean_cosine']:.4f}  "
+                      f"ViUj={top_rel['ViUj']['mean_cosine']:.4f}  "
+                      f"(rand={baselines[k]['mean_cosine_mean']:.4f})")
 
             step_results["adjacent_pairs"][pair_key] = pair_data
 
@@ -237,26 +337,32 @@ def run_experiment(output_dir: str):
         ]
 
         for l1, l2, label in global_pairs:
+            # global_pairs are all ordered l1 < l2 (earlier, later).
             pair_data = {}
             for k in K_VALUES:
-                U1_top = layer_svds[l1]["U"][:, :k]
-                U2_top = layer_svds[l2]["U"][:, :k]
-                U1_bot = layer_svds[l1]["U"][:, -k:]
-                U2_bot = layer_svds[l2]["U"][:, -k:]
+                top_rel = relations_for_pair(layer_svds[l1], layer_svds[l2], k, "top")
+                bot_rel = relations_for_pair(layer_svds[l1], layer_svds[l2], k, "bot")
 
-                pair_data[f"top{k}"] = subspace_overlap(U1_top, U2_top)
-                pair_data[f"bot{k}"] = subspace_overlap(U1_bot, U2_bot)
+                pair_data[f"top{k}"] = top_rel["UiUj"]
+                pair_data[f"bot{k}"] = bot_rel["UiUj"]
+                pair_data[f"top{k}_rel"] = top_rel
+                pair_data[f"bot{k}_rel"] = bot_rel
 
             step_results["non_adjacent"][label] = pair_data
+            r10 = pair_data["top10_rel"]
             print(f"    Global {label} (layers {l1}-{l2}), k=10: "
-                  f"top={pair_data['top10']['mean_cosine']:.4f}  "
-                  f"bot={pair_data['bot10']['mean_cosine']:.4f}")
+                  f"UiUj={r10['UiUj']['mean_cosine']:.4f}  "
+                  f"ViVj={r10['ViVj']['mean_cosine']:.4f}  "
+                  f"UiVj={r10['UiVj']['mean_cosine']:.4f}  "
+                  f"ViUj={r10['ViUj']['mean_cosine']:.4f}")
 
         results["checkpoints"][step_key] = step_results
 
         del model, layer_svds
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        if free_checkpoints:
+            free_checkpoint(repo, revision, CACHE_DIR)
 
         # Save after each checkpoint
         with open(out_path, "w") as f:
@@ -394,6 +500,70 @@ def plot_results(results: dict, output_dir: str):
     plt.close()
 
 
+def plot_relations(results: dict, output_dir: str):
+    """Plot all four cross-layer relations (adjacent-pair mean) across training.
+
+    Purely descriptive: every relation is drawn against the random baseline with
+    none privileged, so you can see whether the directed channels (UiVj, ViUj)
+    track, lead, or diverge from the left-vs-left overlap (UiUj). The right panel
+    shows the directed asymmetry UiVj - ViUj. For this SwiGLU model, watch whether
+    UU falls while VV or UV hold (relocation) versus all of them dissolving.
+    """
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("matplotlib not available; skipping relation plots.")
+        return
+
+    checkpoints = sorted(int(s) for s in results["checkpoints"].keys())
+    baselines = results["random_baselines"]
+    k = 10
+    rel_keys = ["UiUj", "ViVj", "UiVj", "ViUj"]
+    colors = {"UiUj": "tab:red", "ViVj": "tab:green",
+              "UiVj": "tab:purple", "ViUj": "tab:orange"}
+
+    means = {rk: [] for rk in rel_keys}
+    for step in checkpoints:
+        pairs = results["checkpoints"][str(step)]["adjacent_pairs"]
+        for rk in rel_keys:
+            vals = [pairs[pk][f"top{k}_rel"][rk]["mean_cosine"] for pk in pairs]
+            means[rk].append(float(np.mean(vals)))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    fig.suptitle(f"Cross-layer relations: TinyLlama-1.1B "
+                 f"(top-{k}, adjacent-pair mean)", fontsize=13)
+
+    for rk in rel_keys:
+        ax1.plot(checkpoints, means[rk], "o-", color=colors[rk], label=rk)
+    bl = baselines[str(k)]
+    ax1.axhline(bl["mean_cosine_mean"], color="gray", linestyle="--",
+                alpha=0.7, label="random")
+    ax1.fill_between(checkpoints,
+                     bl["mean_cosine_mean"] - 2 * bl["mean_cosine_std"],
+                     bl["mean_cosine_mean"] + 2 * bl["mean_cosine_std"],
+                     color="gray", alpha=0.15)
+    ax1.set_xscale("symlog", linthresh=100000)
+    ax1.set_xlabel("Training step")
+    ax1.set_ylabel("Mean cosine (adjacent layers)")
+    ax1.set_title("All four block relations")
+    ax1.legend(fontsize=9)
+    ax1.set_ylim(bottom=0)
+
+    asym = [means["UiVj"][i] - means["ViUj"][i] for i in range(len(checkpoints))]
+    ax2.plot(checkpoints, asym, "o-", color="black")
+    ax2.axhline(0, color="gray", linestyle="--", alpha=0.7)
+    ax2.set_xscale("symlog", linthresh=100000)
+    ax2.set_xlabel("Training step")
+    ax2.set_ylabel("UiVj - ViUj (mean cosine)")
+    ax2.set_title("Directed asymmetry (>0: earlier-writes / later-reads stronger)")
+
+    plt.tight_layout()
+    plot_path = os.path.join(output_dir, "crosslayer_relations_tinyllama_1b.png")
+    plt.savefig(plot_path, dpi=150)
+    print(f"Relation plot saved to {plot_path}")
+    plt.close()
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -402,9 +572,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Experiment B (TinyLlama): Cross-layer subspace coherence")
     parser.add_argument("--output_dir", default="results/experiment_b_tinyllama")
+    parser.add_argument("--keep_checkpoints", action="store_true",
+                        help="Keep downloaded checkpoints in the HF cache. Default: "
+                             "delete each checkpoint from the cache once its data has "
+                             "been gathered, to save disk during long sweeps.")
     args = parser.parse_args()
 
-    results = run_experiment(args.output_dir)
+    results = run_experiment(args.output_dir,
+                             free_checkpoints=not args.keep_checkpoints)
     plot_results(results, args.output_dir)
+    plot_relations(results, args.output_dir)
 
     print("\nDone. All results saved to", args.output_dir)
